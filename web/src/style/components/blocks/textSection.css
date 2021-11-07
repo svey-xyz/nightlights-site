@@ -1,0 +1,50 @@
+/*
+* Styling for different types of text sections
+*/
+
+/* This can be doen with nunjucks and tailwinds - should transition it */
+
+.textSection {
+	position: relative;
+
+	& > .text-type-container {
+		position: relative;
+		width: 100%;
+
+		&.plain {}
+
+		&.highlighted {}
+
+		&.block {
+			@apply text-center bg-primary-bg shadow;
+			z-index: 1;
+			padding-top: 8rem;
+			padding-bottom: 8rem;
+
+			& > .text-container {}
+		}
+
+		& h1, & h2, & h3, & h4, & h5, & h6 {
+			@apply mb-12;
+
+			&:last-child {
+				margin: 0;
+			}
+		}
+
+		&::after {
+			@apply absolute inset-0 -z-1 bg-primary-bg bg-gradient-to-br from-primary-bg to-secondary-bg;
+			content: '';
+
+			/* background-image: linear-gradient(to bottom right, var(--primary-bg) 50%, var(--secondary-bg-translucent) 50%); */
+		}
+	}
+}
+
+
+/* TODO tailwinds shadows should change universsally when theme is toggled */
+.dark {
+	& .textSection > .text-type-container.block {
+		@apply shadow-lg;
+	}
+}

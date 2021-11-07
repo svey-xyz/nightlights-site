@@ -1,0 +1,18 @@
+---
+pagination:
+  data: pages
+  alias: pageData
+  size: 1
+  addAllPagesToCollections: true
+layout: layouts/main.njk
+tags: pages
+permalink: "{{ pageData.slug | slug }}/index.html"
+---
+
+{#
+	Root for all dynamic Sanity pages
+#}
+
+<article id="{{ pageData.title | slug }}">
+	{% extends "./_includes/layouts/templates/" + pageData.template + ".njk" %}
+</article>

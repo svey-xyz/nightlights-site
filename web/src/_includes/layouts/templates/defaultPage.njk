@@ -1,0 +1,11 @@
+{#
+	Default Sanity page template.
+	Just imports blocks.
+#}
+
+{# {% from "layouts/utilities/_blocks.njk" import blocks with context %}
+{{ blocks(blocks=pageData.content.blocks) }} #}
+
+{% set blocks = pageData.content.blocks %}
+
+{% include ("layouts/utilities/_blocks.njk") %}

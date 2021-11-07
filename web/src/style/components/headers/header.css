@@ -1,0 +1,26 @@
+/*
+* Additional styling for header menu button
+*/
+
+:root {
+	--header-item-height: 25px;
+	--header-padding: 25px;
+	--header-total-height: 75px;
+}
+
+#header {
+	&.menu-open {
+		& > #menu-container {
+			@apply pointer-events-auto;
+
+			& > #menu-background {
+				@apply md:opacity-70;
+			}
+
+			& > #menu {
+				@apply opacity-100;
+			}
+		} 
+	}
+}
+

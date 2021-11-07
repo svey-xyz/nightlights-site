@@ -1,0 +1,19 @@
+{# {% macro blocks(blocks) %} #}
+
+	{% if blocks | length > 0 %}
+		{% set sectionID = 0 %}
+		{% asyncEach section in blocks %}
+			{% set topBlockMargin %}
+				{% if (sectionID == 0) %}
+					top-block 
+				{% endif %}
+			{% endset %}
+
+			<div id="{{ section._type }}-{{ sectionID }}" class="{{ section._type }} relative flex">
+				{% include ("layouts/components/blocks/" + section._type + ".njk") %}
+			</div>
+
+			{% set sectionID = sectionID + 1 %}
+		{% endeach %}
+	{% endif %}
+{# {% endmacro %} #}
