@@ -44,6 +44,10 @@ function loadScripts() {
 					selector: '#returnTo',
 					scriptPath: 'utilities/returnTo'
 				},
+				{
+					selector: '#ringContainer',
+					scriptPath: 'components/rings/rings'
+				},
 			])
 		}
 	)

@@ -1,0 +1,20 @@
+<div class="inset-0">
+	<button id="qrButton">Generate Code</button>
+
+	<div id='popupContainer' class='popup'>
+		<div id='popContent' class="popup-content">	
+			<div id='qrcodeCanvas'></div>
+			<p id='qrClose' class='close'>close</p>
+		</div>
+	</div>
+
+	<div id='ringContainer' class='absolute flex justify-center align-middle top-0 left-0 h-screen w-screen '>
+		{% for artist in artists.artists %}
+			{% for ringName, ring in artist.artistRings %}
+				{% set ringImageAlt = [artist.artistName, ' - ', ringName] | join %}
+				{% set ringData = [{'data-artistCode': artist.artistCode},{'data-ring': ringName}] %}
+				{% image ring, "ring lazy absolute origin-top-left m-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden h-auto min-w-96 w-96", ringImageAlt, "100%", [2160], ringData %}
+			{% endfor %}
+		{% endfor %}
+	</div>
+</div>

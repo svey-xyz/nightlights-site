@@ -3,7 +3,7 @@ const imageUrl = require('@sanity/image-url');
 
 const client = require('../utils/sanity/sanityClient');
 
-module.exports = async (src, cls, alt, sizes, widths) => {
+module.exports = async (src, cls, alt, sizes, widths, dataAttr = []) => {
 	const builder = imageUrl(client)
 	let url = builder.image(src).url();
 
@@ -22,22 +22,24 @@ module.exports = async (src, cls, alt, sizes, widths) => {
 			removeUrlQueryParams: false,
 		},
 		sharpWebpOptions: {
-			quality: 75,
+			quality: 95,
 			alphaQuality: 100,
-			smartSubsample: true,
-			reductionEffort: 6
+			smartSubsample: false,
+			reductionEffort: 1
 		}
 	}
 
 	let metadata = await Image(url, options);
 
-	let imageAttributes = {
-		class: cls,
-		alt,
-		sizes,
-		loading: "lazy",
-		decoding: "async",
-	};
+	let imageAttributes = Object.assign({
+			class: cls,
+			alt,
+			sizes,
+			loading: "lazy",
+			decoding: "async",
+		},
+		...dataAttr
+	);
 
 	let html = Image.generateHTML(metadata, imageAttributes);
 

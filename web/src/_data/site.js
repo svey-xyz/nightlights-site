@@ -9,6 +9,7 @@ module.exports = async () => {
 		}[0],
 		"navigation":*[_id == "navigation"] {
 			"artistSubpath":artistSubpath.current,
+			"interactivePage":interactivePage->slug.current,
 		}[0]
 	}`
 

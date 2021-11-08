@@ -27,17 +27,17 @@ async function networkFetch(query) {
 } 
 
 function writeCache(dataName, data) {
-	fs.mkdir('cache/', { recursive: true }, (err) => {
+	fs.mkdir('cache/data/', { recursive: true }, (err) => {
 		if (err) return console.log(err);
 
-		fs.writeFile(`./cache/cached-${dataName}.json`, JSON.stringify(data), 'utf8', (err) => {
+		fs.writeFile(`./cache/data/cached-${dataName}.json`, JSON.stringify(data), 'utf8', (err) => {
 			if (err) return console.log(err);
 		});
 	});
 }
 
 function readCache(dataName) {
-	return JSON.parse(fs.readFileSync(`./cache/cached-${dataName}.json`, 'utf8', function (err, data) {
+	return JSON.parse(fs.readFileSync(`./cache/data/cached-${dataName}.json`, 'utf8', function (err, data) {
 		if (err) throw err;
 		return data
 	}));

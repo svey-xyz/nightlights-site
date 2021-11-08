@@ -15,7 +15,8 @@
 				{% endif %}
 			{% endset %}
 
-			{% image ring, ringClass, artist.artistName, "100%", [1000] %}
+			{% set ringImageAlt = [artist.artistName, ' - ', ringName] | join %}
+			{% image ring, ringClass, ringImageAlt, "100%", [1000] %}
 		{% endfor %}
 	</div>
 
