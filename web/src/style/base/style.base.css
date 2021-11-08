@@ -103,10 +103,3 @@ iframe {
 	height: 100vh;
 	height: calc(var(--vh, 1vh) * 100);
 }
-
-canvas {
-	min-width: 100vw;
-	position: absolute;
-	display: block;
-	z-index: 0;
-}

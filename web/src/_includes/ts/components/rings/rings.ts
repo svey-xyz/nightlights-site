@@ -1,5 +1,6 @@
 import { pngClickThrough } from '../../utilities/transparencyClickThrough'
 import { updateURLParameter } from '../../utilities/updateURLParameter'
+let QRCode = require('qrcode')
 
 interface ringsArray {
 	[index: string]: NodeListOf<HTMLElement>;
@@ -9,9 +10,20 @@ let ringNames: Array<string> = ['centerRing', 'innerRingOne', 'innerRingTwo', 'o
 let activeRings: Array<string> = [];
 let numArtists: number = 0;
 
+let qrCanvas: HTMLElement;
+let qrClose: HTMLElement;
+
+
 let ringsParamString: string = 'rings'
 
 export const mount = (container: Element) => {
+	qrCanvas = <HTMLElement>document.getElementById('qrcodeCanvas');
+	qrClose = <HTMLElement>document.getElementById('qrClose');
+
+	qrClose.onclick = function () {
+		let overlay: HTMLElement = <HTMLElement>document.getElementById('qrOverlay');
+		overlay.classList.add('hidden');
+	};
 
 	const ringsParam = new URL(window.location.href).searchParams.get(ringsParamString);
 
@@ -30,7 +42,7 @@ export const mount = (container: Element) => {
 			if (ringCode == firstRing) addRing(ring);
 
 			ring.onclick = function (event) {
-				switchRing(pngClickThrough(event, event.target))
+				switchRing(pngClickThrough(event, event.target, 'designRing'))
 			};
 		})
 	});
@@ -73,6 +85,20 @@ function addRing(ring: HTMLElement) {
 }
 
 function generateRingsCode(): void {
-	window.history.replaceState('', '', updateURLParameter(window.location.href, ringsParamString, activeRings.join('')));
+	var opts = {
+		errorCorrectionLevel: 'M',
+		type: 'image/webp',
+		scale: 12,
+		quality: 1,
+		margin: 2,
+		color: {
+			dark: "#000000",
+			light: "#FFFFFF"
+		}
+	}
 
+	window.history.replaceState('', '', updateURLParameter(window.location.href, ringsParamString, activeRings.join('')));
+	QRCode.toCanvas(qrCanvas, 'sample text', opts, function (error: any) {
+		if (error) console.error(error)
+	})
 }

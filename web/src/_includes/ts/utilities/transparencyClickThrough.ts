@@ -1,9 +1,12 @@
 /******** ALLOW TRANSPARENCY CLICK THROUGH ********/
 const ctx: CanvasRenderingContext2D = <CanvasRenderingContext2D>document.createElement("canvas").getContext("2d");
 let stack: Array<HTMLElement> = [];
+let clickThroughTargetClass: string;
 
-export const pngClickThrough = function (ev: MouseEvent, target: any): any {
-	if (!target.classList.contains('ring')) clickThroughRelease(target);
+export const pngClickThrough = function (ev: MouseEvent, target: any, classTarget: string): any {
+	clickThroughTargetClass = classTarget;
+
+	if (!target.classList.contains(clickThroughTargetClass)) clickThroughRelease(target);
 	if (!target.offsetParent) return;
 
 	// Get click coordinates
@@ -26,7 +29,7 @@ export const pngClickThrough = function (ev: MouseEvent, target: any): any {
 	if (alpha === 0) {
 		target.style.pointerEvents = "none";
 		stack.push(target);
-		return pngClickThrough(ev, document.elementFromPoint(ev.clientX, ev.clientY)); // REPEAT
+		return pngClickThrough(ev, document.elementFromPoint(ev.clientX, ev.clientY), clickThroughTargetClass); // REPEAT
 	} else {
 		return clickThroughRelease(target);
 	}
@@ -36,7 +39,7 @@ function clickThroughRelease(target: any): any {
 	stack.forEach(el => (el.style.pointerEvents = "auto")); // Show all hidden elements
 	stack = [];               // Reset stack
 
-	if (!target.classList.contains('ring')) return null;
+	if (!target.classList.contains(clickThroughTargetClass)) return null;
 	return target;
 }
 
