@@ -45,6 +45,7 @@ module.exports = {
 				'opposite-bg': 'var(--opposite-bg)',
 				'primary-border': 'var(--primary-border)',
 				'primary-text': 'var(--primary-text)',
+				'opposite-text': 'var(--opposite-text)',
 				'secondary-bg': 'var(--secondary-bg)',
 				'primary-accent': 'var(--primary-accent)',
 				'secondary-accent': 'var(--secondary-accent)',

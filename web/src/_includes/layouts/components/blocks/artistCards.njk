@@ -5,7 +5,7 @@
 <div class="w-full">
 	{% set cardID = 0 %}
 	{% asyncEach artist in section.artists %}
+		{% set cardLoop = loop.index0 %}
 		{% include "../cards/artistCard.njk" %}
-		{% set cardID = cardID + 1 %}
 	{% endeach %}
 </div>

@@ -1,9 +1,14 @@
 {#
-	Basic Text Section Block.
+	Basic Sponsors Section Block.
 #}
 
-<div class="text-type-container {{ section.textType }}">
-	<div class="text-container main-padding self-center block-padding mx-auto max-w-prose-full">
-		Sponsors!
+<div class="main-padding block-padding">
+	<div class="flex flex-col md:flex-row justify-between md:-mx-6">
+		{% asyncEach sponsor in section.sponsors %}
+			<a href="{{ sponsor.sponsorLink }}" target="_blank" class="group relative overflow-hidden w-2/3 sm:w-1/2 mx-auto md:mx-6 md:w-1/4
+				transform duration-150 hover:scale-102">
+			{% image sponsor.sponsorImage, "lazy relative w-full h-full min-w-full min-h-full object-center object-cover", sponsor.sponsorName, "100%", [400] %}
+			</a>
+		{% endeach %}
 	</div>
 </div>

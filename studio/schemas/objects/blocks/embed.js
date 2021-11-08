@@ -9,8 +9,8 @@ export default {
 		{
 			name: 'url',
 			type: 'url',
-			title: 'Link to the content to be embedded.',
-			description: 'Currently works with: Vimeo, YouTube, Instagram, Twitter, and more.'
+			title: 'Embed from elsewhere.',
+			description: 'Add the url to the content to be embedded.'
 		}
 	],
 	preview: {

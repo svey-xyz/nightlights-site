@@ -3,7 +3,7 @@
 #}
 
 <div class="text-type-container {{ section.textType }}">
-	<div class="text-container main-padding self-center block-padding mx-auto max-w-prose-full">
+	<div class="flex flex-col text-container main-padding block-padding">
 		{{ section.text | sanityBlocksToMarkdown | markdownify | safe }}
 	</div>
 </div>

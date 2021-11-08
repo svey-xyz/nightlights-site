@@ -3,7 +3,7 @@ import { themeInit } from '../utilities/theme'
 
 
 /******** VARIABLES ********/
-let ver = '0.1.3';
+let ver = '0.1.4';
 declare global {
 	var mobile:boolean;
 	var vh:number;
@@ -31,18 +31,6 @@ function loadScripts() {
 				{
 					selector: '#header',
 					scriptPath: 'components/headers/header'
-				},
-				{
-					selector: '.interactiveSection > .section-container > .blobShader',
-					scriptPath: 'components/blocks/interactiveSections/blobShader'
-				},
-				{
-					selector: '.projectsArchive > [data-filterable="true"]', // don't bother loading script if not filterable
-					scriptPath: 'components/blocks/projectsArchive/projectsArchive'
-				},	
-				{
-					selector: '.contactForm #formContainer',
-					scriptPath: 'components/blocks/contact/contact'
 				},
 				{
 					selector: '.video-utility',

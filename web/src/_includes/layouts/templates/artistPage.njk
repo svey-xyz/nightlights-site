@@ -1,52 +1,50 @@
----
-title: {{ artist.artistName }}
-layout: layouts/main.njk
-page_scripts: []
----
+<div class="main-padding padding-top flex-wrap justify-center">
+	<h1 class="block-padding">
+		<a href="/"><i class="fas fa-arrow-left
+				duration-150 hover:scale-105"></i></a>
+		&nbsp;&nbsp;&nbsp;{{ artist.artistName }}
+	</h1>
+	
+	<div class="relative block-padding w-full max-w-xl self-center mx-auto">
+		{% for ringName, ring in artist.artistRings %}
+			{% set ringClass %}
+				{% if loop.index0 == 0 %}
+					lazy relative block w-full h-auto min-w-full min-h-[400px] md:min-h-80 object-center object-cover
+				{% else %}
+					lazy absolute top-0 block w-full h-auto min-w-full min-h-[400px] md:min-h-80 object-center object-cover
+				{% endif %}
+			{% endset %}
 
-{# <div class="main-padding padding-top flex-wrap justify-center">
-  	<div class="m-auto max-w-screen-lg relative">
-
-		<h1 class="text-3xl font-bold mb-7">{{ project.title }}</h1>
-
-		<div id="{{ project.title | slug}}-content" class="grid gap-y-6 mb-24">
-			<div id="{{ project.title | slug}}-description" class="max-w-prose inline-block">
-				{{ project.description | markdownify | safe }}
-			</div>
-
-			<p>
-				<span class="font-bold mb-3">Tags:</span>&nbsp;
-				
-				{% for tag in project.tags %}
-					<a href="/work/#{{ tag | slug}}" class="hover:underline">{{ tag }}</a>
-					{% if not loop.last %}
-					,&nbsp;
-					{% endif %}
-				{% endfor %}
-			</p>
-
-			markdownify needed for embeds which aren't returned as stragiht markdown like the rest of the objects
-			{{ project.content | markdownify | safe }}
-
-			{% if project.links | length > 0 %}
-				<h3 class="text-2xl font-bold">Links: </h3>
-				{% for link in project.links %}
-					<a href="{{ link.url }}" target="_blank" class="hover:underline">{{ link.title }}</a>
-				{% endfor %}
-			{% endif %}
-
-			
-		</div>
-
-		{% if previousPost %}
-				<p class="absolute left-0 inline">← <a href="{{ previousPost.url }}" class="hover:underline">
-					{{ previousPost.data.project.title }}
-				</a></p>	
-		{% endif %} 
-		{% if nextPost %}
-				<p class="absolute right-0 inline"><a href="{{ nextPost.url }}" class="hover:underline">
-					{{ nextPost.data.project.title }}
-				</a> →</p>	
-		{% endif %} 
+			{% image ring, ringClass, artist.artistName, "100%", [1000] %}
+		{% endfor %}
 	</div>
-</div> #}
+
+	<div class="relative flex w-full block-padding justify-center">
+		<a class="std-round-button mx-auto self-center" href="/{{ section.link }}">
+			Get Code!
+		</a>
+	</div>
+
+	<span class="block-padding">
+		{{ artist.artistBio | sanityBlocksToMarkdown | markdownify | safe }}
+	</span>
+
+	<div class="block-padding">
+		{% for social in artist.artistSocials %}
+			{% set socialIcon %}
+				{% switch social.socialType %}
+					{% case 'website' %}
+						fas fa-external-link-square-alt
+					{% case 'linkedin' %}
+						fab fa-linkedin
+					{% default %}
+						fab fa-{{ social.socialType }}-square
+				{% endswitch %}
+			{% endset %}
+
+			<a aria-label="{{ social.socialType }} - {{ social.socialTitle }}" class="group relative mr-4 md:mr-8" href="{{ social.url }}" target="_blank">
+				<i class="{{ socialIcon }} relative text-primary-text text-3xl md:text-4xl duration-100 group-hover:scale-110 z-10"></i>	
+			</a>	
+		{% endfor %}
+	</div>
+</div>

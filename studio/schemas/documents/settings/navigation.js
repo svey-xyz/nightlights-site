@@ -14,6 +14,13 @@ export default {
 			to: [{ type: 'page' }],
 		},
 		{
+			title: 'Interactive Page',
+			name: 'interactivePage',
+			type: 'reference',
+			description: 'Select the interactive page.',
+			to: [{ type: 'page' }],
+		},
+		{
 			title: 'Artist Subpath',
 			name: 'artistSubpath',
 			type: 'slug',

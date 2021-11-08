@@ -21,7 +21,7 @@ permalink: false
 {% endset %}
 
 <!doctype html>
-<html lang="en" class="">
+<html lang="en" class="{{ 'dark' if  pageData.template == null else ''}}">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,16 +29,10 @@ permalink: false
 		<title>{{ pageTitle }}</title>
 		<meta name="description" content="{{ pageDescriptor }}">
 
-		<script>
-			// Do this before the body gets parsed
-			if (localStorage.getItem('theme') === 'dark') {
-				document.documentElement.classList.add('dark');
-			}
-		</script>
 		{% bundlePointer "CSS" %}
 	</head>
-	<body class="relative min-h-full h-auto w-full top-0" lang=en>
-		<main id="pageContent" class="relative min-h-full h-auto w-full top-0">
+	<body class="relative min-h-full h-auto w-full top-0">
+		<main id="pageContent" class="relative min-h-screen h-auto w-full top-0 pb-12">
 			{% include './components/headers/header.njk' %}
 			{{ content | safe }}
 			{% include './components/footers/footer.njk' %}

@@ -4,7 +4,7 @@
 
 {# Set Tailwinds classes #}
 {% set gradient %}
-	{% if cardID % 2 == 0 %}
+	{% if cardLoop % 2 == 0 %}
 		md:after:-mr-64 md:after:bg-gradient-to-r
 	{% else %}
 		md:after:-ml-64 md:after:bg-gradient-to-l
@@ -12,13 +12,13 @@
 {% endset %}
 
 {% set alignment %}
-	{% if cardID % 2 == 1 %}
+	{% if cardLoop % 2 == 1 %}
 		md:right-0 md:text-right
 	{% endif %}
 {% endset %}
 
 <div class="main-padding self-center w-full block-padding">
-	<a href="{{ artist.artistSlug }}" class="relative flex w-full max-h-96 md:max-h-80 rounded-3xl shadow-md">
+	<a href="/{{ site.navigation.artistSubpath | slug }}/{{ artist.slug.current | slug }}" class="relative flex w-full max-h-96 md:max-h-80 rounded-3xl shadow-md">
 		<div class="rounded-3xl relative block w-full overflow-hidden">
 			{% image artist.artistCover, "lazy relative inline-block w-full h-auto min-w-full min-h-[400px] md:min-h-80 object-center object-cover", artist.artistName, "100%", [1000] %}
 				

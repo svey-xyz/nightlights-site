@@ -5,15 +5,10 @@ export default {
 	type: 'object',
 	fields: [
 		{
-			title: 'Artist Name',
-			name: 'artistName',
+			title: 'Button Text',
+			name: 'buttonText',
 			type: 'string',
-			description: 'Name of the artist.',
+			description: 'Text that will appear on the button that generates the QR code.',
 		}
-	],
-	preview: {
-		select: {
-			title: 'title'
-		}
-	}
+	]
 }

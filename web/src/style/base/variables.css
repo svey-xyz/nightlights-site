@@ -11,11 +11,22 @@
 	--opposite-bg: #000000;
 
 	--primary-text: #000000;
+	--opposite-text: #FFFFFF;
 	--primary-border: #000000;
 
 	--primary-accent: #837DA1;
 	--secondary-accent: #AD7F9F;
 	--medium-accent: #3D325D;
+}
+
+.dark {
+	--primary-bg: #000000;
+	--secondary-bg: #1C1C1C;
+	--opposite-bg: #FFFFFF;
+
+	--primary-text: #EEEEEE;
+	--primary-border: #EEEEEE;
+
 }
 
 @custom-media --sm-screen (min-width: 480px);

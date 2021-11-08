@@ -56,6 +56,31 @@ export default {
 			description: 'A list of all related social media accounts.',
 			type: 'array',
 			of: [{ type: 'socialSite' }]
+		},
+		{
+			title: 'Artist Ring Patterns',
+			name: 'artistRings',
+			description: 'All rings must be on the same size canvas. 2160x2160px',
+			type: 'object',
+			fields: [
+				{ title: 'Centre Ring', type: 'image', name: 'centerRing', validation: Rule => Rule.required() },
+				{ title: 'Inner Ring-1', type: 'image', name: 'innerRingOne', validation: Rule => Rule.required() },
+				{ title: 'Inner Ring-2', type: 'image', name: 'innerRingTwo', validation: Rule => Rule.required() },
+				{ title: 'Outer Ring-1', type: 'image', name: 'outerRingOne', validation: Rule => Rule.required() },
+				{ title: 'Outer Ring-2', type: 'image', name: 'outerRingTwo', validation: Rule => Rule.required() },
+			],
+			options: {
+				collapsible: true,
+				collapsed: true
+			},
+			validation: Rule => Rule.required()
+		},
+		{
+			title: 'Artist Code',
+			name: 'artistCode',
+			description: 'Used for integrating with projection.',
+			type: 'number',
+			validation: Rule => Rule.required().integer().positive()
 		}
 	],
 	preview: {

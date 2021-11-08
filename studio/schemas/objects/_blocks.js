@@ -11,5 +11,5 @@ export default {
 	title: 'Blocks',
 	name: '_blocks',
 	type: 'array',
-	of: [simpleHero, textSection, video, artistCards, linkButton, sponsors],
+	of: [simpleHero, textSection, video, artistCards, linkButton, sponsors, embed],
 }

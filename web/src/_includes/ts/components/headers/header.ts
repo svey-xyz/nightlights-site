@@ -1,19 +1,10 @@
 let header:Element;
-let menuSwitch:HTMLInputElement;
 
 export const mount = (container: Element) => {
 	header = container;
-	menuSwitch = header.querySelector('#menuSwitch')!;
-	menuSwitch.addEventListener("click", switchMenu);
-	switchMenu();
 
 	window.onscroll = function () { scrollIndicator() }
 	window.addEventListener("resize", scrollIndicator);
-}
-
-function switchMenu() {
-	let menuState = menuSwitch.checked;
-	header.classList[menuState ? 'add' : 'remove']('menu-open');
 }
 
 function scrollIndicator() {
