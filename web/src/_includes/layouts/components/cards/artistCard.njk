@@ -1,0 +1,36 @@
+{#
+	Item Card Block.
+#}
+
+{# Set Tailwinds classes #}
+{% set gradient %}
+	{% if cardID % 2 == 0 %}
+		md:after:-mr-64 md:after:bg-gradient-to-r
+	{% else %}
+		md:after:-ml-64 md:after:bg-gradient-to-l
+	{% endif %}
+{% endset %}
+
+{% set alignment %}
+	{% if cardID % 2 == 1 %}
+		md:right-0 md:text-right
+	{% endif %}
+{% endset %}
+
+<div class="main-padding self-center w-full block-padding">
+	<a href="{{ artist.artistSlug }}" class="relative flex w-full max-h-96 md:max-h-80 rounded-3xl shadow-md">
+		<div class="rounded-3xl relative block w-full overflow-hidden">
+			{% image artist.artistCover, "lazy relative inline-block w-full h-auto min-w-full min-h-[400px] md:min-h-80 object-center object-cover", artist.artistName, "100%", [1000] %}
+				
+			<div class="absolute flex flex-col justify-center bottom-0 z-10 w-full px-8 py-12 md:h-full md:w-2/5 md:min-w-md md:px-12 md:py-0 {{ alignment }}
+					after:absolute after:inset-0 after:-mt-24 md:after:my-0 after:bg-gradient-to-t {{ gradient }}
+					after:from-primary-bg after:via-primary-bg"
+					style="hyphens: auto;">
+
+				<h5 class="z-10 overflow-hidden leading-tight pb-4 break-words">{{ artist.artistName }}</h5>
+				<p class="z-10 line-clamp-1 md:line-clamp-3">{{ artist.artistBio | sanityBlocksToMarkdown }}</p>
+
+			</div>
+		</div>
+	</a>
+</div>

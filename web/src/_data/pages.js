@@ -6,11 +6,15 @@ module.exports = async () => {
 			blocks[]{
 				_type,
 				...,
-				_type == "projectsArchive" => {
-					"tags":tags[]->{...},
+				_type == "linkButton" => {
+                	"title":link.title,
+					"link":link.page->slug.current
 				},
-				_type == "itemCard" => {
-                	"linkID":link->_id
+				_type == "artistCards" => {
+                	"artists":artists[]->{
+                  		"slug":slug.current,
+                  		...
+					}
               	}
           	}
 		}`

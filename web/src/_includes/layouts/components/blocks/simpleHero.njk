@@ -2,6 +2,9 @@
 	Simple Hero section.
 #}
 
-<div class="relative flex overflow-hidden w-full sixty-height-section {{ topBlockMargin }}">
-	{% image section.heroImage, "lazy relative inline-block w-full h-full min-w-full min-h-full object-center object-cover", "", "100vw", [1280] %}
+<div class="relative flex overflow-hidden main-padding">
+	<div class="duration-500 relative flex -translate-y-1/2 mb-[-50%] lg:-translate-y-2/3 lg:mb-[-66.666%]
+			after:absolute after:bottom-0 after:left-0 after:right-0 after:top-1/2 after:bg-gradient-to-t after:from-primary-bg">
+		{% image section.heroImage, "lazy relative block w-full h-full min-w-full min-h-full object-center object-cover", "", "100vw", [1280] %}
+	</div>
 </div>

@@ -26,10 +26,10 @@ export default {
 			inputComponent: SlugInput,
 			description: 'Set the slug for the artist\'s page.',
 			options: {
-				source: 'title',
+				source: 'artistName',
 				isUnique: isUniqueAcrossAllDocuments,
 				basePath: async (document) => {
-					const projectsRoot = await client.fetch(`*[_id == "navigation"]{"archivePageSlug":archivePage->slug.current}[0].archivePageSlug`)
+					const projectsRoot = await client.fetch(`*[_id == "navigation"]{"artistSlug":artistSubpath.current}[0].artistSlug`)
 
 					return projectsRoot ? `/${projectsRoot}` : ' '
 				}
@@ -60,13 +60,13 @@ export default {
 	],
 	preview: {
 		select: {
-			title: 'title',
-			thumbnail: 'thumbnail',
+			name: 'artistName',
+			artistCover: 'artistCover',
 		},
 		prepare(value) {
 			return {
-				title: value.title,
-				media: value.thumbnail,
+				title: value.name,
+				media: value.artistCover,
 				subtitle: `A fantastic Nightlights contributor!`
 			}
 		}

@@ -1,0 +1,11 @@
+{#
+	Basic Text Section Block.
+#}
+
+<div class="w-full">
+	{% set cardID = 0 %}
+	{% asyncEach artist in section.artists %}
+		{% include "../cards/artistCard.njk" %}
+		{% set cardID = cardID + 1 %}
+	{% endeach %}
+</div>

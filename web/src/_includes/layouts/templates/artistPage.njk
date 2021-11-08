@@ -1,11 +1,8 @@
 ---
-title: {{ project.title }}
+title: {{ artist.artistName }}
 layout: layouts/main.njk
 page_scripts: []
 ---
-
-{% set previousPost = collections.projects | getPreviousCollectionItem(page) %}
-{% set nextPost = collections.projects | getNextCollectionItem(page) %}
 
 {# <div class="main-padding padding-top flex-wrap justify-center">
   	<div class="m-auto max-w-screen-lg relative">

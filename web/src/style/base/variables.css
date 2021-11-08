@@ -18,22 +18,6 @@
 	--medium-accent: #3D325D;
 }
 
-.light {
-
-}
-
-.dark {
-	--primary-bg: #222222;
-	--secondary-bg: #1C1C1C;
-	--opposite-bg: #FFFFFF;
-
-	--primary-text: #EEEEEE;
-	--primary-border: #EEEEEE;
-	
-	--medium-accent: #F4ECF8;
-
-}
-
 @custom-media --sm-screen (min-width: 480px);
 @custom-media --max-sm-screen (max-width: 768px);
 @custom-media --md-screen (min-width: 768px);

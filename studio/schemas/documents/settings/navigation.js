@@ -1,3 +1,5 @@
+import SlugInput from 'sanity-plugin-better-slug'
+
 export default {
 	title: 'Site Navigation',
 	name: 'navigation',
@@ -10,6 +12,13 @@ export default {
 			type: 'reference',
 			description: 'Select the page to be used for the root of the site.',
 			to: [{ type: 'page' }],
+		},
+		{
+			title: 'Artist Subpath',
+			name: 'artistSubpath',
+			type: 'slug',
+			inputComponent: SlugInput,
+			description: 'Set the subpath slug for the artists\' pages.'
 		}
 	],
 }

@@ -3,4 +3,23 @@
 #}
 
 <div id="footer" class="absolute bottom-0 w-full z-10">
+	<div class="z-10 transition-spacing duration-500">
+		<div class="block-padding flex flex-row justify-between">
+			{% for social in site.about.social %}
+				{% set socialIcon %}
+					{% switch social.socialType %}
+						{% case 'linkedin' %}
+							fab fa-linkedin
+						{% default %}
+							fab fa-{{ social.socialType }}-square
+					{% endswitch %}
+				{% endset %}
+				<a aria-label="{{ social.socialType }} - {{ social.socialTitle }}" class="group relative mr-4 md:mr-8" href="{{ social.url }}">
+					<i class="{{ socialIcon }} relative text-medium-accent text-3xl md:text-4xl duration-100 group-hover:scale-110 z-10
+							after:accent-highlight after:shadow-sm group-hover:after:shadow-md">
+					</i>	
+				</a>	
+			{% endfor %}
+		</div>
+	</div>
 </div>

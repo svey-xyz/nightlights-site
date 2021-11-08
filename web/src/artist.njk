@@ -1,0 +1,15 @@
+---
+pagination:
+  data: artists.artists
+  alias: artist
+  size: 1
+  addAllPagesToCollections: true
+layout: layouts/main.njk
+tags: 
+	- artists
+permalink: "/{{ site.navigation.artistSubpath | slug }}/{{ artist.artistSlug | slug }}/index.html"
+---
+
+<article id="{{ artist.artistName | slug }}">
+	{% extends "./_includes/layouts/templates/artistPage.njk" %}
+</article>

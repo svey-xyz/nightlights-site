@@ -1,7 +1,7 @@
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-	mode: (process.env.NODE_ENV === 'production' ? '' : 'jit'),
+	mode: 'jit',
 	purge: {
 		content: ["./src/_includes/layouts/**/*.njk", "./src/*.njk"],
 		options: {
@@ -30,7 +30,8 @@ module.exports = {
 				'1/7': '15%',
 				'1/5': '20%',
 				'1/4': '20%',
-				'1/3': '33%'
+				'1/3': '33%',
+				'1/2': '50%'
 			},
 			flexGrow: {
 				'2': 1,
@@ -77,5 +78,7 @@ module.exports = {
 
 		}
 	},
-	plugins: [],
+	plugins: [
+		require('@tailwindcss/line-clamp'),
+	],
 };

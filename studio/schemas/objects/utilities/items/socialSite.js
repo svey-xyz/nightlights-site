@@ -20,6 +20,7 @@ export default {
 			type: 'string',
 			options: {
 				list: [
+					{ title: 'Website', value: 'website' },
 					{ title: 'Twitter', value: 'twitter' },
 					{ title: 'Instagram', value: 'instagram' },
 					{ title: 'Facebook', value: 'facebook' },

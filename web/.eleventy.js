@@ -4,7 +4,6 @@ const blocksToMD = require("./lib/shortcodes/blocksToMD")
 const betterSlugs = require("./lib/filters/betterSlugs")
 const videoEmbed = require("./lib/shortcodes/videoEmbed")
 const videoID = require("./lib/shortcodes/videoID")
-const matchingPorjects = require("./lib/shortcodes/matchingProjects")
 const imageCache = require("./lib/shortcodes/imageCache")
 const bundlePointer = require("./lib/shortcodes/bundlePointer")
 const emailSplitter = require("./lib/shortcodes/emailSplitter")
@@ -31,8 +30,6 @@ module.exports = (eleventyConfig) => {
 	eleventyConfig.addFilter("sanityBlocksToMarkdown", blocksToMD);
 
 	eleventyConfig.addFilter("emailSplitter", emailSplitter);
-
-	eleventyConfig.addShortcode("getMatchingProjects", matchingPorjects);
 
 	eleventyConfig.addNunjucksAsyncShortcode("image", imageCache);
 

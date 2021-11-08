@@ -1,16 +1,20 @@
 @layer base {
 	h1, h2, h3, h4, h5, h6 {
-		@apply font-heading text-center leading-normal text-primary-text;
+		@apply font-heading leading-normal text-primary-text;
+		font-family: 'Montserrat';
 	}
 
 	h1 {
-		@apply text-6xl font-extrabold;
+		@apply text-4xl font-black;
 	}
 	h2 {
-		@apply text-4xl font-bold;
+		@apply text-2xl md:text-3xl font-black relative inline-block
+			after:absolute after:block after:h-[6px] after:left-0 after:w-[120%] after:top-full after:mt-2
+			after:rounded-full after:bg-gradient-to-r after:from-primary-border tracking-widest;
+		font-variant: small-caps;
 	}
 	h5 {
-		@apply text-left font-bold font-body text-primary-text text-xl lg:text-2xl;
+		@apply text-xl md:text-2xl font-black text-primary-text;
 	}
 	h6 {
 		@apply text-left font-bold font-body text-primary-text text-lg lg:text-xl;
@@ -49,7 +53,7 @@
 	}
 
 	.accent-highlight {
-		@apply absolute inset-0 overflow-hidden -z-1 rounded-sm mt-1 ml-1 min-h-full w-full bg-secondary-accent transition-all duration-200 group-hover:left-1 group-hover:ml-1/8 group-hover:bg-primary-accent;
+		/* @apply absolute inset-0 overflow-hidden -z-1 rounded-sm mt-1 ml-1 min-h-full w-full bg-secondary-accent transition-all duration-200 group-hover:left-1 group-hover:ml-1/8 group-hover:bg-primary-accent; */
 	}
 
 	.svg-theme-colour {
