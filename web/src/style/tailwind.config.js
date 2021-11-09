@@ -39,6 +39,9 @@ module.exports = {
 			scale: {
 				'102': '1.02'
 			},
+			fontSize: {
+				'header-text': 'var(--header-item-height)'
+			},
 			colors: {
 				'primary-bg': 'var(--primary-bg)',
 				'header-bg': 'var(--header-bg)',

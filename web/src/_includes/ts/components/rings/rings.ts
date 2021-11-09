@@ -11,22 +11,13 @@ let activeRings: Array<string> = [];
 let numArtists: number = 0;
 
 let qrCanvas: HTMLElement;
-let qrClose: HTMLElement;
-
 
 let ringsParamString: string = 'rings'
 
 export const mount = (container: Element) => {
-	qrCanvas = <HTMLElement>document.getElementById('qrcodeCanvas');
-	qrClose = <HTMLElement>document.getElementById('qrClose');
-
-	qrClose.onclick = function () {
-		let overlay: HTMLElement = <HTMLElement>document.getElementById('qrOverlay');
-		overlay.classList.add('hidden');
-	};
+	initQROverlay(container);
 
 	const ringsParam = new URL(window.location.href).searchParams.get(ringsParamString);
-
 	
 	ringNames.forEach(ringName => {
 		let currentRingCode = ringNames.indexOf(ringName);
@@ -46,6 +37,23 @@ export const mount = (container: Element) => {
 			};
 		})
 	});
+}
+
+function initQROverlay(container: Element): void {
+	qrCanvas = <HTMLElement>document.getElementById('qrcodeCanvas');
+
+	let qrOverlay = <HTMLElement>document.getElementById('qrOverlay');
+	let qrClose = <HTMLElement>document.getElementById('qrClose');
+	let qrButton = <HTMLElement>document.getElementById('qrButton');
+
+	qrClose.onclick = function () {
+		qrOverlay.classList.add('hidden');
+	};
+
+	qrButton.onclick = function () {
+		generateQRCode();
+		qrOverlay.classList.remove('hidden');
+	};
 }
 
 function switchRing(selectedRing:HTMLElement): void {
@@ -81,11 +89,11 @@ function addRing(ring: HTMLElement) {
 	ring.classList.add('block');
 	ring.classList.remove('hidden');
 
-	generateRingsCode();
+	window.history.replaceState('', '', updateURLParameter(window.location.href, ringsParamString, activeRings.join('')));
 }
 
-function generateRingsCode(): void {
-	var opts = {
+function generateQRCode(): void {
+	var qrOpts = {
 		errorCorrectionLevel: 'M',
 		type: 'image/webp',
 		scale: 12,
@@ -97,8 +105,7 @@ function generateRingsCode(): void {
 		}
 	}
 
-	window.history.replaceState('', '', updateURLParameter(window.location.href, ringsParamString, activeRings.join('')));
-	QRCode.toCanvas(qrCanvas, 'sample text', opts, function (error: any) {
+	QRCode.toCanvas(qrCanvas, `nl-${activeRings.join('')}`, qrOpts, function (error: any) {
 		if (error) console.error(error)
 	})
 }

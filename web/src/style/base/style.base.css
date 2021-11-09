@@ -9,7 +9,7 @@
 	}
 	h2 {
 		@apply text-3xl md:text-4xl font-black relative inline-block self-center
-			after:absolute after:block after:h-[6px] after:left-0 after:w-[120%] after:top-full after:mt-2
+			after:absolute after:block after:h-[6px] after:left-[-5%] after:w-[120%] after:top-full after:mt-2
 			after:rounded-full after:bg-gradient-to-r after:from-primary-border tracking-widest;
 		font-variant: small-caps;
 	}
@@ -39,26 +39,6 @@
 
 	.top-block {
 		margin-top: calc(-1 * var(--header-total-height));
-	}
-
-	.angle-background {
-		background-image: linear-gradient(to bottom right, var(--primary-bg) 50%, var(--secondary-bg-translucent) 50%);
-	}
-
-	.accent-background {
-		background: linear-gradient(to right, var(--primary-accent), var(--secondary-accent));
-	}
-
-	.accent-highlight {
-		/* @apply absolute inset-0 overflow-hidden -z-1 rounded-sm mt-1 ml-1 min-h-full w-full bg-secondary-accent transition-all duration-200 group-hover:left-1 group-hover:ml-1/8 group-hover:bg-primary-accent; */
-	}
-
-	.svg-theme-colour {
-		@apply filter brightness-0;
-	}
-
-	.site-logo-cutout {
-		clip-path: 
 	}
 }
 

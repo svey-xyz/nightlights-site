@@ -1,8 +1,9 @@
 <div class="inset-0">
-	<button id="qrButton">Generate Code</button>
 
-	<div id="qrOverlay" class='absolute z-10 left-0 top-0 w-screen h-screen flex items-center justify-center'>
-		<div class="absolute bg-primary-bg m-auto h-full w-full max-h-[300px] max-w-[300px]">	
+	<div id="qrOverlay" class='absolute z-30 left-0 top-0 w-screen h-screen flex items-center justify-center hidden
+		after:absolute after:inset-0 after:bg-primary-bg after:opacity-90'>
+
+		<div class="absolute bg-primary-bg m-auto z-10 h-full w-full max-h-[300px] max-w-[300px]">	
 			<canvas id="qrcodeCanvas" class="relative !w-full !h-full rounded-3xl"></canvas>
 			<div class="relative pt-4 flex items-center justify-center">
 				<p id="qrClose" class='relative std-round-button cursor-pointer inline-block'>close</p>
@@ -10,14 +11,24 @@
 		</div>
 	</div>
 
-	<div id='ringContainer' class='absolute flex justify-center items-center top-0 left-0 h-screen w-screen'>
-		{% for artist in artists.artists %}
-			{% for ringName, ring in artist.artistRings %}
-				{% set ringImageAlt = [artist.artistName, ' - ', ringName] | join %}
-				{% set ringData = [{'data-artistCode': artist.artistCode},{'data-ring': ringName}] %}
-				{% image ring, "designRing lazy absolute origin-top-left m-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden
-						w-auto h-auto max-w-xl max-h-[65%] object-center object-contain cursor-pointer", ringImageAlt, "100%", [2160], ringData %}
+	<div class="absolute inset-0 flex flex-col items-center justify-end pb-12 pointer-events-auto">
+		<div id='ringContainer' class='absolute flex flex-col justify-center items-center top-0 left-0 h-screen w-screen'>
+
+			{% for artist in artists.artists %}
+				{% for ringName, ring in artist.artistRings %}
+
+					{% set ringImageAlt = [artist.artistName, ' - ', ringName] | join %}
+					{% set ringData = [{'data-artistCode': artist.artistCode},{'data-ring': ringName}] %}
+					{% set ringClasses %}
+						designRing lazy absolute origin-top-left m-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden
+						w-auto h-auto max-w-xl max-h-[65%] object-center object-contain cursor-pointer
+					{% endset %}
+
+					{% image ring, ringClasses, ringImageAlt, "100%", [2160], ringData %}
+
+				{% endfor %}
 			{% endfor %}
-		{% endfor %}
+		</div>
+		<p id="qrButton" class='relative std-round-button cursor-pointer inline-block z-20'>Generate Code</p>
 	</div>
 </div>

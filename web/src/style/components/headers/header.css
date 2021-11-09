@@ -3,10 +3,17 @@
 */
 
 :root {
-	--header-item-height: 25px;
-	--header-padding: 25px;
-	--header-total-height: 75px;
+	--header-item-height: 20px;
+	--header-padding: 20px;
+	--header-total-height: 60px;
+
+	@media (--md-screen) {
+		--header-item-height: 25px;
+		--header-padding: 25px;
+		--header-total-height: 75px;
+	}
 }
+
 
 #header {
 	&.menu-open {

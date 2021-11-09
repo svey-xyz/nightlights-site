@@ -1,5 +1,5 @@
 .std-round-button {
-	@apply relative rounded-full tracking-wider font-bold cursor-pointer px-6 py-2 m-2 text-primary-bg bg-opposite-bg border-[3px] border-transparent;
+	@apply text-sm md:text-base relative rounded-full tracking-wider font-bold cursor-pointer px-4 py-1 md:px-6 md:py-2 m-2 text-primary-bg bg-opposite-bg border-[3px] border-transparent;
 
 	&:hover {
 		@apply text-primary-text bg-primary-bg border-[3px] border-opposite-bg;
