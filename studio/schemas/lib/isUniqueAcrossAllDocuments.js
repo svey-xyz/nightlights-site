@@ -1,4 +1,5 @@
-import client from 'part:@sanity/base/client'
+import sanityClient from 'part:@sanity/base/client'
+
 
 // Note: this assumes that every document that has a slug field
 // have it on the `slug` field at the root
@@ -14,5 +15,6 @@ export function isUniqueAcrossAllDocuments(slug, options) {
 
 	const query = `!defined(*[!(_id in [$draft, $published]) && slug.current == $slug][0]._id)`
 
+	const client = sanityClient.withConfig({ apiVersion: '2021-06-07' })
 	return client.fetch(query, params)
 }

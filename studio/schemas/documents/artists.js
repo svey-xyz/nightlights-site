@@ -1,9 +1,10 @@
-import client from 'part:@sanity/base/client'
+import sanityClient from 'part:@sanity/base/client'
 import SlugInput from 'sanity-plugin-better-slug'
 import { isUniqueAcrossAllDocuments } from '../lib/isUniqueAcrossAllDocuments'
 import { validateSlug } from '../lib/validateSlug'
 
 import { BsPersonBadgeFill } from 'react-icons/bs';
+
 
 export default {
 		
@@ -29,6 +30,7 @@ export default {
 				source: 'artistName',
 				isUnique: isUniqueAcrossAllDocuments,
 				basePath: async (document) => {
+					const client = sanityClient.withConfig({ apiVersion: '2021-06-07' })
 					const projectsRoot = await client.fetch(`*[_id == "navigation"]{"artistSlug":artistSubpath.current}[0].artistSlug`)
 
 					return projectsRoot ? `/${projectsRoot}` : ' '
@@ -80,7 +82,25 @@ export default {
 			name: 'artistCode',
 			description: 'Used for integrating with projection.',
 			type: 'number',
-			validation: Rule => Rule.required().integer().positive()
+			validation: Rule => Rule.required().integer().positive().max(9).custom(async(artistID, context) => {
+
+				const id = context.document._id.replace(/^drafts\./, '')
+				console.log(id)
+				const params = {
+					draft: `drafts.${id}`,
+					published: id,
+					artistID
+				}
+
+				const query = `!defined(*[_type == 'artist'
+          && artistCode == $artistID
+          && !(_id in [$draft, $published])][0]._id)`
+
+				const client = sanityClient.withConfig({ apiVersion: '2021-06-07' })
+				let test = await client.fetch(query, params);
+				console.log(test)
+				return test ? test : "Must use a unique artist code.";
+			})
 		}
 	],
 	preview: {

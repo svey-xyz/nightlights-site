@@ -18,7 +18,9 @@
 {% endset %}
 
 <div class="main-padding self-center w-full block-padding">
-	<a href="/{{ site.navigation.artistSubpath | slug }}/{{ artist.slug.current | slug }}" class="relative flex w-full max-h-96 md:max-h-80 rounded-3xl shadow-md">
+	<a href="/{{ site.navigation.artistSubpath | slug }}/{{ artist.slug.current | slug }}"
+			class="relative flex w-full max-h-96 md:max-h-80 rounded-3xl shadow-md">
+		<div id="{{ artist.slug.current | slug }}-card" class="absolute mt-[var(--header-total-padding)] w-full"></div>
 		<div class="rounded-3xl relative block w-full overflow-hidden">
 			{% image artist.artistCover, "lazy relative inline-block w-full h-auto min-w-full min-h-[400px] md:min-h-80 object-center object-cover", artist.artistName, "100%", [1000] %}
 				

@@ -6,11 +6,14 @@
 	--header-item-height: 20px;
 	--header-padding: 20px;
 	--header-total-height: 60px;
+	--header-total-padding: cacl(-1 * var(--header-total-height));
 
 	@media (--md-screen) {
 		--header-item-height: 25px;
 		--header-padding: 25px;
 		--header-total-height: 75px;
+		--header-total-padding: calc(-1 * var(--header-total-height));
+
 	}
 }
 
