@@ -7,6 +7,7 @@ import client from 'part:@sanity/base/client'
 
 import defaultPage from './templates/defaultPage';
 import interactivePage from './templates/interactivePage';
+import displayPage from './templates/displayPage';
 
 import { RiPagesFill } from 'react-icons/ri';
 import { AiOutlineFileSearch } from 'react-icons/ai'
@@ -117,7 +118,8 @@ export default {
 							options: {
 								list: [
 									{ title: 'Blocks', value: 'defaultPage' },
-									{ title: 'Interactive', value: 'interactivePage' }
+									{ title: 'Interactive', value: 'interactivePage' },
+									{ title: 'Display', value: 'displayPage' }
 								],
 								// layout: 'radio',
 							}
@@ -127,7 +129,7 @@ export default {
 				{
 					type: 'object',
 					name: 'options',
-					fields: [defaultPage, interactivePage ]
+					fields: [defaultPage, interactivePage, displayPage]
 				}
 			]
 		},

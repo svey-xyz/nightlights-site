@@ -1,130 +1,76 @@
-import { pngClickThrough } from '../../utilities/transparencyClickThrough'
 import { updateURLParameter } from '../../utilities/updateURLParameter'
-let QRCode = require('qrcode')
 
-interface ringsArray {
-	[index: string]: NodeListOf<HTMLElement>;
-}
-let rings:ringsArray = {};
-let ringNames: Array<string> = ['centerRing', 'innerRingOne', 'innerRingTwo', 'outerRingOne', 'outerRingTwo'];
-let activeRings: Array<string> = [];
-let numArtists: number = 0;
 
-let qrCanvas: HTMLElement;
+export class ringSection {
 
-let ringsParamString: string = 'rings'
-let preloadedImages: Array<HTMLElement> = [];
-
-export const mount = (container: Element) => {
-	console.log('loaded')
-	initQROverlay(container);
-
-	const ringsParam = new URL(window.location.href).searchParams.get(ringsParamString);
+	ringContainer: HTMLElement;
 	
-	ringNames.forEach(ringName => {
-		let currentRingCode = ringNames.indexOf(ringName);
+	ringNames: Array<string> = ['centerRing', 'innerRingOne', 'innerRingTwo', 'outerRingOne', 'outerRingTwo'];
+	rings: Map<string, HTMLElement[]> = new Map<string, HTMLElement[]>();
+	activeRings: Map<string, HTMLElement> = new Map<string, HTMLElement>();
 
-		rings[ringName] = container.querySelectorAll(`[data-ring='${ringName}']`);
-		numArtists = numArtists ? numArtists : rings[ringName].length;
+	numArtists: number;
+	ringsParamString: string = 'rings'
 
-		let firstRing = ringsParam ? ringsParam[currentRingCode] : Math.floor(Math.random() * numArtists);
+	inputHandler: (e: Event) => void;
 
-		rings[ringName].forEach(ring => {
-			let ringCode = Number(ring.getAttribute('data-artistcode'));
+	constructor(container: Element) {
+		this.ringContainer = <HTMLElement>container;
+		this.inputHandler = this.handleInput.bind(this);
 
-			if (ringCode == firstRing) addRing(ring)
-			else preloadRing(ring);
+		this.numArtists = Array.from(container.querySelectorAll('.designRing')).length / this.ringNames.length - 1;
 
-			ring.onclick = function (event) {
-				switchRing(pngClickThrough(event, event.target, 'designRing'))
-			};
-		})
-	});
+		const ringsParam = new URL(window.location.href).searchParams.get(this.ringsParamString);
+		
+		this.ringNames.forEach(ringName => {
+			let nodeListRings: NodeListOf<HTMLElement> = container.querySelectorAll(`[data-ringtype='${ringName}']`)
+			let currentRingSelection = Array.from(nodeListRings)
 
-	console.log(`Found Rings: ${rings}`)
-}
+			this.rings.set(ringName, currentRingSelection);
 
-function initQROverlay(container: Element): void {
-	qrCanvas = <HTMLElement>document.getElementById('qrcodeCanvas');
+			let firstRing = ringsParam ? ringsParam[this.ringNames.indexOf(ringName)] : Math.floor(Math.random() * this.numArtists);
 
-	let qrOverlay = <HTMLElement>document.getElementById('qrOverlay');
-	let qrClose = <HTMLElement>document.getElementById('qrClose');
-	let qrButton = <HTMLElement>document.getElementById('qrButton');
-
-	qrClose.onclick = function () {
-		qrOverlay.classList.add('hidden');
-	};
-
-	qrButton.onclick = function () {
-		generateQRCode();
-		qrOverlay.classList.remove('hidden');
-	};
-}
-
-function switchRing(selectedRing:HTMLElement): void {
-	if (!selectedRing) return;
-
-	let ringCode: number = Number(selectedRing.getAttribute('data-artistcode'));
-	let nextRingCode: number = ringCode + 1 >= numArtists ? 0 : ringCode + 1;
-
-	let newRing: HTMLElement = selectedRing;
-
-	ringNames.forEach(ringName => {
-		if (ringName == selectedRing.getAttribute('data-ring')) {
-			rings[ringName].forEach(ring => {
-				let ringCodeCheck = Number(ring.getAttribute('data-artistcode'));
-
-				if (ringCodeCheck == nextRingCode) newRing = ring;
+			currentRingSelection.forEach((ring, index) => {
+				if (index == firstRing) this.addRing(ring);
+				ring.addEventListener('mousedown', this.inputHandler);
 			})
-		}
-	});
-
-	selectedRing.classList.remove('block');
-	selectedRing.classList.add('hidden');
-
-	addRing(newRing);
-}
-
-function addRing(ring: HTMLElement) {
-	let ringName = <string>ring.getAttribute('data-ring');
-	let ringCode = <string>ring.getAttribute('data-artistcode');
-
-	activeRings[ringNames.indexOf(ringName)] = ringCode;
-
-	ring.classList.add('block');
-	ring.classList.remove('hidden');
-
-	window.history.replaceState('', '', updateURLParameter(window.location.href, ringsParamString, activeRings.join('')));
-}
-
-function preloadRing(ring: HTMLElement) {
-	let preloadRing = new Image();
-	ring.onload = function () {
-		var index = preloadedImages.indexOf(ring);
-		if (index !== -1) {
-			// remove image from the array once it's loaded
-			// for memory consumption reasons
-			preloadedImages.splice(index, 1);
-		}
-	}
-	preloadedImages.push(ring);
-	preloadRing.src = <string>ring.getAttribute('src');
-}
-
-function generateQRCode(): void {
-	var qrOpts = {
-		errorCorrectionLevel: 'M',
-		type: 'image/webp',
-		scale: 12,
-		quality: 1,
-		margin: 2,
-		color: {
-			dark: "#000000",
-			light: "#FFFFFF"
-		}
+		});
 	}
 
-	QRCode.toCanvas(qrCanvas, `nl-${activeRings.join('')}`, qrOpts, function (error: any) {
-		if (error) console.error(error)
-	})
+	handleInput(e: Event): void { };
+
+	addRing(newRing: HTMLElement) {
+		let newRingType = newRing.getAttribute('data-ringtype')!;
+		this.activeRings.set(newRingType, newRing);
+
+		newRing.classList.add('block');
+		newRing.classList.remove('hidden');
+
+		this.ringNames.forEach(ringName => {
+			if (ringName == newRingType) {
+				this.rings.get(ringName)!.forEach(ring => {
+					if (ring != newRing) {
+						ring.classList.remove('block')
+						ring.classList.add('hidden')
+					}
+				})
+			}
+		});
+
+		window.history.replaceState('', '', updateURLParameter(window.location.href, this.ringsParamString, this.activeCodes()));
+	}
+
+	activeCodes(): string {
+		let code:string = '';
+
+		this.activeRings.forEach(ring => {
+			code += this.rings.get(ring.getAttribute('data-ringtype')!)!.indexOf(ring)
+		});
+
+		return code;
+	}
 }
+
+ringSection.prototype.handleInput = function (e: Event) {
+	// Handle click
+};
