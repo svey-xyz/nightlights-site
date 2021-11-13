@@ -7,6 +7,12 @@ export default {
 	icon: ImEmbed2,
 	fields: [
 		{
+			title: 'Embed title.',
+			name: 'embedTitle',
+			type: 'string',
+			description: 'Give your embed a title.'
+		},
+		{
 			name: 'url',
 			type: 'url',
 			title: 'Embed from elsewhere.',

@@ -13,8 +13,8 @@ permalink: false
 {% set pageTitle %}
 	{% if pageData.descriptiveTitle %}
 		{{ pageData.descriptiveTitle }}
-	{% elif project.title %}
-		{{ site.siteSettings.title }} | {{ project.title }}
+	{% elif artist.artistName %}
+		{{ site.siteSettings.title }} | {{ artist.artistName }}
 	{% else %}
 	{% endif %}
 

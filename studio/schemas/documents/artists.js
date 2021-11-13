@@ -93,13 +93,13 @@ export default {
 				}
 
 				const query = `!defined(*[_type == 'artist'
-          && artistCode == $artistID
-          && !(_id in [$draft, $published])][0]._id)`
+					&& artistCode == $artistID
+					&& !(_id in [$draft, $published])][0]._id)`
 
 				const client = sanityClient.withConfig({ apiVersion: '2021-06-07' })
-				let test = await client.fetch(query, params);
-				console.log(test)
-				return test ? test : "Must use a unique artist code.";
+				let documents = await client.fetch(query, params);
+
+				return documents ? documents : "Must use a unique artist code.";
 			})
 		}
 	],

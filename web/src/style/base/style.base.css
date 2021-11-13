@@ -13,7 +13,7 @@
 			after:rounded-full after:bg-gradient-to-r after:from-primary-border tracking-widest;
 		font-variant: small-caps;
 	}
-	h5 {
+	h3 {
 		@apply text-xl md:text-2xl font-black text-primary-text;
 	}
 	h6 {

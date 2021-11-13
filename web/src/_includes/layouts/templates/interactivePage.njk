@@ -18,13 +18,16 @@
 				{% for ringName, ring in artist.artistRings %}
 
 					{% set ringImageAlt = [artist.artistName, ' - ', ringName] | join %}
-					{% set ringData = [{'data-artistCode': artist.artistCode},{'data-ring': ringName}] %}
+					{% set artistCode = ['data-artistCode=', artist.artistCode] | join %}
+					{% set ringType = ['data-ring=', ringName] | join %}
+
+					{% set ringData = [artistCode, ' ', ringType] | join %}
 					{% set ringClasses %}
 						designRing lazy absolute origin-top-left m-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden
 						w-auto h-auto max-w-xl max-h-[65%] object-center object-contain cursor-pointer
 					{% endset %}
 
-					{% image ring, ringClasses, ringImageAlt, "100%", [2160], ringData %}
+					{% image ring, ringClasses, ringImageAlt, "100%", [480, 720, 1080, 2160], ringData %}
 
 				{% endfor %}
 			{% endfor %}

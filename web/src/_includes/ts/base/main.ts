@@ -16,8 +16,9 @@ declare global {
 ; (function () {
 	global.mobile = (/Mobi|Android/i.test(navigator.userAgent)) ? true : false;
 
-	themeInit();
 	loadScripts();
+	themeInit();
+
 
 	console.log(`JS Version is: ${ver}`);
 })();

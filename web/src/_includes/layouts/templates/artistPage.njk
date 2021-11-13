@@ -43,7 +43,7 @@
 				{% endswitch %}
 			{% endset %}
 
-			<a aria-label="{{ social.socialType }} - {{ social.socialTitle }}" class="group relative mr-4 md:mr-8" href="{{ social.url }}" target="_blank">
+			<a aria-label="{{ social.socialType }} - {{ social.socialTitle }}" class="group relative mr-4 md:mr-8" href="{{ social.url }}" target="_blank" rel="noreferrer">
 				<i class="{{ socialIcon }} relative text-primary-text text-3xl md:text-4xl duration-100 group-hover:scale-110 z-10"></i>	
 			</a>	
 		{% endfor %}

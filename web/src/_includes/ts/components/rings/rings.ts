@@ -13,8 +13,10 @@ let numArtists: number = 0;
 let qrCanvas: HTMLElement;
 
 let ringsParamString: string = 'rings'
+let preloadedImages: Array<HTMLElement> = [];
 
 export const mount = (container: Element) => {
+	console.log('loaded')
 	initQROverlay(container);
 
 	const ringsParam = new URL(window.location.href).searchParams.get(ringsParamString);
@@ -30,13 +32,16 @@ export const mount = (container: Element) => {
 		rings[ringName].forEach(ring => {
 			let ringCode = Number(ring.getAttribute('data-artistcode'));
 
-			if (ringCode == firstRing) addRing(ring);
+			if (ringCode == firstRing) addRing(ring)
+			else preloadRing(ring);
 
 			ring.onclick = function (event) {
 				switchRing(pngClickThrough(event, event.target, 'designRing'))
 			};
 		})
 	});
+
+	console.log(`Found Rings: ${rings}`)
 }
 
 function initQROverlay(container: Element): void {
@@ -90,6 +95,20 @@ function addRing(ring: HTMLElement) {
 	ring.classList.remove('hidden');
 
 	window.history.replaceState('', '', updateURLParameter(window.location.href, ringsParamString, activeRings.join('')));
+}
+
+function preloadRing(ring: HTMLElement) {
+	let preloadRing = new Image();
+	ring.onload = function () {
+		var index = preloadedImages.indexOf(ring);
+		if (index !== -1) {
+			// remove image from the array once it's loaded
+			// for memory consumption reasons
+			preloadedImages.splice(index, 1);
+		}
+	}
+	preloadedImages.push(ring);
+	preloadRing.src = <string>ring.getAttribute('src');
 }
 
 function generateQRCode(): void {

@@ -4,7 +4,7 @@
 */
 
 export function updateURLParameter(url: string, param: string, paramVal: string) {
-	var TheAnchor = null;
+	var TheAnchor:any = null;
 	var newAdditionalURL = "";
 	var tempArray = url.split("?");
 	var baseURL = tempArray[0];

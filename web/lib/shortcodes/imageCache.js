@@ -3,7 +3,7 @@ const imageUrl = require('@sanity/image-url');
 
 const client = require('../utils/sanity/sanityClient');
 
-module.exports = async (src, cls, alt, sizes, widths, dataAttr = []) => {
+module.exports = async (src, cls, alt, sizes, widths, dataAttr = '') => {
 	const builder = imageUrl(client)
 	let url = builder.image(src).url();
 
@@ -31,18 +31,35 @@ module.exports = async (src, cls, alt, sizes, widths, dataAttr = []) => {
 
 	let metadata = await Image(url, options);
 
-	let imageAttributes = Object.assign({
-			class: cls,
-			alt,
-			sizes,
-			loading: "lazy",
-			decoding: "async",
-		},
-		...dataAttr
+	let lowestSrc = metadata["webp"][0];
+
+	const srcset = Object.keys(metadata).reduce(
+		(acc, format) => ({
+			...acc,
+			[format]: metadata[format].reduce(
+				(_acc, curr) => `${_acc} ${curr.srcset} ,`,
+				""
+			),
+		}),
+		{}
 	);
 
-	let html = Image.generateHTML(metadata, imageAttributes);
+	const source = `<source type="image/webp" srcset="${srcset["webp"]}" >`;
 
-	// You bet we throw an error on missing alt in `imageAttributes` (alt="" works okay)
-	return html;
+	const data = Object.assign({}, ...dataAttr);
+
+	const img = `<img
+		loading="lazy" 
+		class="${cls}"
+		alt="${alt}"
+		src="${lowestSrc.url}"
+		sizes='${sizes}'
+		data-src="${srcset["webp"]}"
+		width="${lowestSrc.width}"
+		height="${lowestSrc.height}" 
+		${dataAttr}>
+	`;
+
+	return `<picture> ${source} ${img} </picture>`;
+
 };
