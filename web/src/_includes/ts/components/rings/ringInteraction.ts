@@ -28,8 +28,15 @@ class ringInteraction extends ringSection {
 			this.generateQRCode();
 		}
 
+		const pageAccessedByReload = (
+			(window.performance.navigation && window.performance.navigation.type === 1) ||
+			window.performance
+				.getEntriesByType('navigation')
+				.map((nav) => nav.entryType)
+				.includes('reload')
+		);
 		const codeParam = new URL(window.location.href).searchParams.get('code');
-		if (codeParam && codeParam == 'open') this.generateQRCode();
+		if (codeParam && codeParam == 'open' && !pageAccessedByReload) this.generateQRCode();
 	}
 
 	generateQRCode(): any {
@@ -47,7 +54,7 @@ class ringInteraction extends ringSection {
 			}
 		}
 
-		this.QRCode.toCanvas(this.qrCanvas, `${this.ringsQRPass}${this.activeCodes(true)}`, qrOpts, function (error: any) {
+		this.QRCode.toCanvas(this.qrCanvas, `${this.ringsQRPass}${this.activeCodes()}`, qrOpts, function (error: any) {
 			if (error) console.error(error)
 		})
 	}

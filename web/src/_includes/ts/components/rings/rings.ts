@@ -12,6 +12,7 @@ export class ringSection {
 	numArtists: number;
 	ringsParamString: string = 'rings'
 	ringsQRPass: string = 'nl-'
+	codeSeparator: string = '-'
 
 	inputHandler: (e: Event) => void;
 
@@ -29,8 +30,10 @@ export class ringSection {
 
 			this.rings.set(ringName, currentRingSelection);
 
-			let paramCode: any = ringsParam ? ringsParam[this.ringNames.indexOf(ringName)] : '';
-			let firstRing = paramCode && !isNaN(paramCode) ? paramCode : Math.floor(Math.random() * this.numArtists);
+			let paramCode: any = ringsParam ? ringsParam : '';
+			let artistParamCodes: Array<string> = paramCode.split(this.codeSeparator);
+			let artistCode: any = artistParamCodes[this.ringNames.indexOf(ringName)]
+			let firstRing = artistCode && !isNaN(artistCode) ? artistCode : Math.floor(Math.random() * this.numArtists);
 
 			currentRingSelection.forEach((ring, index) => {
 				if (index == firstRing) this.addRing(ring);
@@ -59,18 +62,17 @@ export class ringSection {
 			}
 		});
 
-		window.history.replaceState('', '', updateURLParameter(window.location.href, this.ringsParamString, this.activeCodes(false)));
+		window.history.replaceState('', '', updateURLParameter(window.location.href, this.ringsParamString, this.activeCodes()));
 	}
 
-	activeCodes(seperators: boolean): string {
+	activeCodes(): string {
 		let code:string = '';
 
 		this.activeRings.forEach((ring) => {
-			code += this.rings.get(ring.getAttribute('data-ringtype')!)!.indexOf(ring)
-			if (seperators) code += '.';
+			code += `${this.rings.get(ring.getAttribute('data-ringtype')!)!.indexOf(ring)}${this.codeSeparator}`
 		});
 
-		return seperators ? code.slice(0, -1) : code;
+		return code.slice(0, -1);
 	}
 }
 
