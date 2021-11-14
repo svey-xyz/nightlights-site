@@ -46,10 +46,7 @@ module.exports = async (src, cls, alt, sizes, widths, dataAttr = '') => {
 
 	const source = `<source type="image/webp" srcset="${srcset["webp"]}" >`;
 
-	const data = Object.assign({}, ...dataAttr);
-
 	const img = `<img
-		loading="lazy" 
 		class="${cls}"
 		alt="${alt}"
 		src="${lowestSrc.url}"

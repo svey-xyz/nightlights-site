@@ -11,6 +11,7 @@ export class ringSection {
 
 	numArtists: number;
 	ringsParamString: string = 'rings'
+	ringsQRPass: string = 'nl-'
 
 	inputHandler: (e: Event) => void;
 
@@ -28,7 +29,8 @@ export class ringSection {
 
 			this.rings.set(ringName, currentRingSelection);
 
-			let firstRing = ringsParam ? ringsParam[this.ringNames.indexOf(ringName)] : Math.floor(Math.random() * this.numArtists);
+			let paramCode: any = ringsParam ? ringsParam[this.ringNames.indexOf(ringName)] : '';
+			let firstRing = paramCode && !isNaN(paramCode) ? paramCode : Math.floor(Math.random() * this.numArtists);
 
 			currentRingSelection.forEach((ring, index) => {
 				if (index == firstRing) this.addRing(ring);
@@ -57,17 +59,18 @@ export class ringSection {
 			}
 		});
 
-		window.history.replaceState('', '', updateURLParameter(window.location.href, this.ringsParamString, this.activeCodes()));
+		window.history.replaceState('', '', updateURLParameter(window.location.href, this.ringsParamString, this.activeCodes(false)));
 	}
 
-	activeCodes(): string {
+	activeCodes(seperators: boolean): string {
 		let code:string = '';
 
-		this.activeRings.forEach(ring => {
+		this.activeRings.forEach((ring) => {
 			code += this.rings.get(ring.getAttribute('data-ringtype')!)!.indexOf(ring)
+			if (seperators) code += '.';
 		});
 
-		return code;
+		return seperators ? code.slice(0, -1) : code;
 	}
 }
 

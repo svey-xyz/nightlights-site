@@ -2,8 +2,8 @@
 
 <div class="main-padding padding-top flex-wrap justify-center">
 	<h1 class="block-padding">
-		<a href="/#{{ artist.slug.current }}-card"><i class="fas fa-arrow-left
-				duration-150 hover:scale-105"></i></a>
+		<a href="/#{{ artist.slug.current }}-card" aria-label="Back to Home"><i class="fas fa-arrow-left
+				duration-150 hover:scale-105" alt="Back Arrow"></i></a>
 		&nbsp;&nbsp;&nbsp;{{ artist.artistName }}
 	</h1>
 	
@@ -11,9 +11,9 @@
 		{% for ringName, ring in artist.artistRings %}
 			{% set ringClass %}
 				{% if loop.index0 == 0 %}
-					lazy relative block w-full h-auto min-w-full min-h-[400px] md:min-h-80 object-center object-cover
+					lazy relative block w-full h-auto min-w-full object-center object-cover
 				{% else %}
-					lazy absolute top-0 block w-full h-auto min-w-full min-h-[400px] md:min-h-80 object-center object-cover
+					lazy absolute top-0 block w-full h-auto min-w-full object-center object-cover
 				{% endif %}
 			{% endset %}
 
@@ -23,7 +23,15 @@
 	</div>
 
 	<div class="relative flex w-full block-padding justify-center">
-		<a class="std-round-button mx-auto self-center" href="/{{ site.navigation.interactivePage }}/?rings={{artist.artistCode}}{{artist.artistCode}}{{artist.artistCode}}{{artist.artistCode}}{{artist.artistCode}}">
+		{% set artistNum = 0 %}
+		{% set artistCode = 0 %}
+		{% for a in artists.artists %}
+			{% if a == artist %}
+				{% set artistCode = artistNum %}
+			{% endif %}
+			{% set artistNum = artistNum + 1 %}
+		{% endfor %}
+		<a class="std-round-button mx-auto self-center" href="/{{ site.navigation.interactivePage }}/?rings={{artistCode}}{{artistCode}}{{artistCode}}{{artistCode}}{{artistCode}}&code=open">
 			Get Code!
 		</a>
 	</div>
@@ -46,7 +54,7 @@
 			{% endset %}
 
 			<a aria-label="{{ social.socialType }} - {{ social.socialTitle }}" class="group relative mr-4 md:mr-8" href="{{ social.url }}" target="_blank" rel="noreferrer">
-				<i class="{{ socialIcon }} relative text-primary-text text-3xl md:text-4xl duration-100 group-hover:scale-110 z-10"></i>	
+				<i class="{{ socialIcon }} relative text-primary-text text-3xl md:text-4xl duration-100 group-hover:scale-110 z-10" alt="{{ social.socialType }} - {{ social.socialTitle }}"></i>	
 			</a>	
 		{% endfor %}
 	</div>

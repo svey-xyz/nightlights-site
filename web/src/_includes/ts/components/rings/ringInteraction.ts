@@ -25,12 +25,15 @@ class ringInteraction extends ringSection {
 		};
 
 		qrButton.onclick = () => {
-			this.qrOverlay.classList.remove('hidden');
 			this.generateQRCode();
 		}
+
+		const codeParam = new URL(window.location.href).searchParams.get('code');
+		if (codeParam && codeParam == 'open') this.generateQRCode();
 	}
 
 	generateQRCode(): any {
+		this.qrOverlay.classList.remove('hidden');
 
 		var qrOpts = {
 			errorCorrectionLevel: 'M',
@@ -44,7 +47,7 @@ class ringInteraction extends ringSection {
 			}
 		}
 
-		this.QRCode.toCanvas(this.qrCanvas, `nl-${this.activeCodes()}`, qrOpts, function (error: any) {
+		this.QRCode.toCanvas(this.qrCanvas, `${this.ringsQRPass}${this.activeCodes(true)}`, qrOpts, function (error: any) {
 			if (error) console.error(error)
 		})
 	}
