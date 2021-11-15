@@ -11,7 +11,7 @@ export class ringSection {
 
 	numArtists: number;
 	ringsParamString: string = 'rings'
-	ringsQRPass: string = 'nl-'
+	ringsQRPass: string = 'nl'
 	codeSeparator: string = '-'
 
 	inputHandler: (e: Event) => void;

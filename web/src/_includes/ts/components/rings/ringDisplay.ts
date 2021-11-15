@@ -8,49 +8,45 @@ export const mount = (container: Element) => {
 }
 
 class ringDisplay extends ringSection {
-	ratios = [1, 2, 64]
-	rotationRatio:number = 360 / 12
+	ringGroupRatios: { [index: string]: number; } = { 'centre': 1, 'inner': 2, 'outer': 64 }
+	ringGroups: { [index: string]: HTMLElement[]; } = {};
+	
+	rotationRatio: number = 360 / 12
+	counter: number = 0
 
 	constructor(container: Element) {
 		super(<Element>container.querySelector('#ringContainer'));
+		this.updateRingGroups();
+
 		this.mainLoop();
 		this.initializeScanning();
-
 	}
 
 	/******** MAIN LOOP ********/
 	mainLoop = () => {
 		setTimeout(() => { requestAnimationFrame(this.mainLoop); }, 1000);
 
-		let dt: Date = new Date();
-		this.rotateRings(dt.getSeconds());
-	}
+		this.counter++
+		let rotation = (this.counter % (this.ringGroupRatios['outer'] * 12)) * this.rotationRatio;
 
-	rotateRings(sec: number): void {
-		let centre: HTMLElement = this.activeRings.get(this.ringNames[0])!
-		let innerOne: HTMLElement = this.activeRings.get(this.ringNames[1])!
-		let innerTwo: HTMLElement = this.activeRings.get(this.ringNames[2])!
-		let outerOne: HTMLElement = this.activeRings.get(this.ringNames[3])!
-		let outerTwo: HTMLElement = this.activeRings.get(this.ringNames[4])!
+		for (let group in this.ringGroups) {
+			if (this.counter % this.ringGroupRatios[group] == 0) {
+				let groupRotation = (rotation / this.ringGroupRatios[group])
 
-		let rotation = sec * this.rotationRatio;
-
-		if (sec % this.ratios[0] == 0) {
-			centre.style.rotate = `${rotation / this.ratios[0]}deg`
-		}
-
-		if (sec % this.ratios[1] == 0) {
-			innerOne.style.rotate = `${rotation / this.ratios[1]}deg`
-			innerTwo.style.rotate = `${rotation / this.ratios[1]}deg`
-		}
-
-		if (sec % this.ratios[2] == 0) {
-			outerOne.style.rotate = `${rotation / this.ratios[2]}deg`
-			outerTwo.style.rotate = `${rotation / this.ratios[2]}deg`
+				this.ringGroups[group].forEach(ring => {
+					ring.setAttribute('style', `transform: rotate(${groupRotation}deg) translate(-50%, -50%)`)
+				})
+			}
 		}
 	}
 
-
+	updateRingGroups(): void {
+		this.ringGroups = {
+			'centre': [this.activeRings.get(this.ringNames[0])!],
+			'inner': [this.activeRings.get(this.ringNames[1])!, this.activeRings.get(this.ringNames[2])!],
+			'outer': [this.activeRings.get(this.ringNames[3])!, this.activeRings.get(this.ringNames[4])!]
+		}
+	}
 
 	/******** Handle QR Code Scanning ********/
 	initializeScanning(): void {
@@ -84,18 +80,21 @@ class ringDisplay extends ringSection {
 	}
 
 	loadRingsFromQR(qrCodeMessage:string) {
-		var rings = qrCodeMessage.split('.');
-		// if (rings[0] == PASS.split('.')[0]) {
-		// 	rings.shift()
+		let ringsCode: Array<string> = qrCodeMessage.split('-');
 
-		// 	if (Object.values(artistPicks) == rings.toString()) {
-		// 		console.log('ring already active')
-		// 		return;
-		// 	}
+		if (ringsCode[0] == this.ringsQRPass) {
+			ringsCode.forEach((code, index) => {
+				if (index == 0 && code == this.ringsQRPass) return;
+				else {
+					let ringType: string = this.ringNames[index - 1]
+					let ringGroup: HTMLElement[] = this.rings.get(ringType)!
+					let loadRing = ringGroup[Number(code)]
 
-		// 	for (i = 0; i < ringNames.length; i++) {
-		// 		this.addRing(ringNames[i], rings[i]);
-		// 	}
-		// }
+					this.addRing(loadRing)
+				}
+			});
+		}
+
+		this.updateRingGroups()
 	}
 }

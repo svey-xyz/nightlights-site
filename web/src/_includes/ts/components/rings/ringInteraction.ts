@@ -54,7 +54,7 @@ class ringInteraction extends ringSection {
 			}
 		}
 
-		this.QRCode.toCanvas(this.qrCanvas, `${this.ringsQRPass}${this.activeCodes()}`, qrOpts, function (error: any) {
+		this.QRCode.toCanvas(this.qrCanvas, `${this.ringsQRPass}-${this.activeCodes()}`, qrOpts, function (error: any) {
 			if (error) console.error(error)
 		})
 	}
