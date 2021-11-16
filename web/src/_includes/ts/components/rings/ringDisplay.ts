@@ -20,27 +20,33 @@ class ringDisplay extends ringSection {
 
 	constructor(container: Element) {
 		super(<Element>container.querySelector('#ringContainer'));
-		this.updateRingGroups();
+		this.ringGroups = {
+			'centre': [...this.rings.get(this.ringNames[0])!],
+			'inner': [...this.rings.get(this.ringNames[1])!, ...this.rings.get(this.ringNames[2])!],
+			'outer': [...this.rings.get(this.ringNames[3])!, ...this.rings.get(this.ringNames[4])!]
+		}
 
-		document.addEventListener('keydown', (e) => {
-			switch (e.code) {
-				case 'ArrowUp':
-					this.ringsScale += this.scaleInteger;
-					this.updateRingTransforms();
-					break;
-				case 'ArrowDown':
-					this.ringsScale -= this.scaleInteger
-					this.updateRingTransforms();
-					break;
-				case 'Space':
-					this.randomizeRings();
-				default:
-					break;
-			}
-		});	
+		document.addEventListener('keydown', (e) => this.keyPressControls(e));
 
 		this.mainLoop();
 		this.initializeScanning();
+	}
+
+	keyPressControls(e: KeyboardEvent): void {
+		switch (e.code) {
+			case 'ArrowUp':
+				this.ringsScale += this.scaleInteger;
+				this.updateRingTransforms();
+				break;
+			case 'ArrowDown':
+				this.ringsScale -= this.scaleInteger
+				this.updateRingTransforms();
+				break;
+			case 'Space':
+				this.randomizeRings();
+			default:
+				break;
+		}
 	}
 
 	/******** MAIN LOOP ********/
@@ -56,14 +62,6 @@ class ringDisplay extends ringSection {
 			let rand = Math.floor(Math.random() * this.numArtists);
 			this.addRing(this.rings.get(ringType)![rand])
 		})
-	}
-
-	updateRingGroups(): void {
-		this.ringGroups = {
-			'centre': [...this.rings.get(this.ringNames[0])!],
-			'inner': [...this.rings.get(this.ringNames[1])!, ...this.rings.get(this.ringNames[2])!],
-			'outer': [...this.rings.get(this.ringNames[3])!, ...this.rings.get(this.ringNames[4])!]
-		}
 	}
 
 	updateRingTransforms(): void {
@@ -91,7 +89,7 @@ class ringDisplay extends ringSection {
 					cameraId,
 					{
 						fps: 2,
-						qrbox: 550,
+						qrbox: 500,
 						
 					},
 					qrCodeMessage => {
