@@ -2,17 +2,19 @@
 const ctx: CanvasRenderingContext2D = <CanvasRenderingContext2D>document.createElement("canvas").getContext("2d");
 let stack: Array<HTMLElement> = [];
 let clickThroughTargetClass: string;
-
+let picture: boolean = false;
 export const pngClickThrough = function (ev: MouseEvent, target: any, classTarget: string): any {
 	clickThroughTargetClass = classTarget;
 
-	if (!target.classList.contains(clickThroughTargetClass)) clickThroughRelease(target);
+	if (!target.classList.contains(clickThroughTargetClass) ) {
+		clickThroughRelease(target);
+	}
 	if (!target.offsetParent) return;
 
 	// Get click coordinates
 	const isImage = /img/i.test(target.tagName),
-		x = ev.pageX - target.offsetParent.offsetLeft,
-		y = ev.pageY - target.offsetParent.offsetTop;
+		x = ev.pageX,
+		y = ev.pageY;
 
 
 	ctx.canvas.width = getWinWidth();
@@ -29,6 +31,12 @@ export const pngClickThrough = function (ev: MouseEvent, target: any, classTarge
 	if (alpha === 0) {
 		target.style.pointerEvents = "none";
 		stack.push(target);
+
+		if (/picture/i.test(target.parentNode.tagName)) {
+			target.parentNode.style.pointerEvents = "none";
+			stack.push(target.parentNode);
+		}
+
 		return pngClickThrough(ev, document.elementFromPoint(ev.clientX, ev.clientY), clickThroughTargetClass); // REPEAT
 	} else {
 		return clickThroughRelease(target);

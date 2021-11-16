@@ -1,3 +1,6 @@
+import { RiLayoutMasonryFill } from 'react-icons/ri';
+
+
 export default {
 
 	title: 'Interactive Page Template',
@@ -5,10 +8,14 @@ export default {
 	type: 'object',
 	fields: [
 		{
-			title: 'Button Text',
-			name: 'buttonText',
-			type: 'string',
-			description: 'Text that will appear on the button that generates the QR code.',
-		}
+			name: 'note',
+			type: 'note',
+			options: {
+				icon: RiLayoutMasonryFill,
+				headline: 'No customization available for selected template.',
+				message: 'This template is for the interactive page only.',
+				tone: 'transparent'
+			}
+		},
 	]
 }

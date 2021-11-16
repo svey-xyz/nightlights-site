@@ -1,19 +1,30 @@
 {#
 	Container for Design Rings, used for display and interaction
 #}
-<div id='ringContainer' class='absolute flex flex-col justify-center items-center top-0 left-0 h-screen w-screen'>
+<div id='ringContainer' class='absolute flex align-middle justify-items-center justify-center top-0 left-0 h-screen w-screen overflow-hidden object-contain'>
 	{% for artist in artists.artists %}
 		{% for ringName, ring in artist.artistRings %}
 
 			{% set ringImageAlt = [artist.artistName, ' - ', ringName] | join %}
 			{% set ringType = ['data-ringtype=', ringName] | join %}
 
-			{% set ringClasses %}
-				designRing lazy absolute origin-top-left m-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden
-				w-auto h-auto max-w-xl max-h-[65%] object-center object-contain cursor-pointer
+			{% set sizing %}
+				{% if ringDisplay == true %}
+					max-h-full w-auto h-full
+				{% else %}
+					max-h-[65%] w-auto h-[65%]
+				{% endif %}
 			{% endset %}
 
-			{% image ring, ringClasses, ringImageAlt, "100%", [480, 720, 1080, 2160], ringType %}
+			{% set ringClasses %}
+				designRing lazy max-h-full w-auto h-full object-contain
+			{% endset %}
+
+			{% set pictureClasses %}
+				{{ sizing }} absolute self-center hidden cursor-pointer
+			{% endset %}
+
+			{% image ring, ringClasses, ringImageAlt, "100%", [480, 1080, 2160], ringType, pictureClasses %}
 
 		{% endfor %}
 	{% endfor %}

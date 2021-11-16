@@ -3,7 +3,7 @@ const imageUrl = require('@sanity/image-url');
 
 const client = require('../utils/sanity/sanityClient');
 
-module.exports = async (src, cls, alt, sizes, widths, dataAttr = '') => {
+module.exports = async (src, imgClasses, alt, sizes, widths, dataAttr = '', picClasses = '') => {
 	const builder = imageUrl(client)
 	let url = builder.image(src).url();
 
@@ -47,16 +47,16 @@ module.exports = async (src, cls, alt, sizes, widths, dataAttr = '') => {
 	const source = `<source type="image/webp" srcset="${srcset["webp"]}" >`;
 
 	const img = `<img
-		class="${cls}"
+		class="${imgClasses}"
 		alt="${alt}"
 		src="${lowestSrc.url}"
 		sizes='${sizes}'
 		data-src="${srcset["webp"]}"
 		width="${lowestSrc.width}"
 		height="${lowestSrc.height}" 
-		${dataAttr}>
+		>
 	`;
 
-	return `<picture> ${source} ${img} </picture>`;
+	return `<picture class="${picClasses}" ${dataAttr}> ${source} ${img} </picture>`;
 
 };

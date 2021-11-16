@@ -1,4 +1,5 @@
 import { ringSection } from "./rings";
+import { ringClass } from "./ringClass";
 import { pngClickThrough } from '../../utilities/transparencyClickThrough'
 
 
@@ -64,11 +65,17 @@ class ringInteraction extends ringSection {
 
 		let selectedRing = pngClickThrough(<MouseEvent>e, e.target, 'designRing');
 		if(!selectedRing) return;
+		selectedRing = selectedRing.parentNode;
 
-		let ringType = <string>selectedRing.getAttribute('data-ringtype');
-		let ringCode: number = this.rings.get(ringType)!.indexOf(selectedRing);
+		let ringType = selectedRing.getAttribute('data-ringtype');
+		let ringCode: number = 0
+
+		this.rings.get(ringType)!.forEach((ring, index) => {
+			if (ring.getElement() == selectedRing) ringCode = index
+		});
 
 		let nextRingCode: number = ringCode + 1 >= this.rings.get(ringType)!.length ? 0 : ringCode + 1;
+
 
 		this.addRing(this.rings.get(ringType)![nextRingCode]);
 	}

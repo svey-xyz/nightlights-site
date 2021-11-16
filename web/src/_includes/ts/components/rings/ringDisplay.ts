@@ -1,4 +1,5 @@
 import { ringSection } from "./rings";
+import { ringClass } from "./ringClass";
 import { Html5Qrcode } from 'html5-qrcode'
 import { Html5QrcodeSupportedFormats } from 'html5-qrcode'
 
@@ -9,14 +10,34 @@ export const mount = (container: Element) => {
 
 class ringDisplay extends ringSection {
 	ringGroupRatios: { [index: string]: number; } = { 'centre': 1, 'inner': 2, 'outer': 64 }
-	ringGroups: { [index: string]: HTMLElement[]; } = {};
+	ringGroupRotations: { [index: string]: number; } = { 'centre': 0, 'inner': 0, 'outer': 0 };
+	ringGroups: { [index: string]: ringClass[]; } = {};
 	
 	rotationRatio: number = 360 / 12
 	counter: number = 0
+	ringsScale: number = 1.0
+	scaleInteger: number = 0.01
 
 	constructor(container: Element) {
 		super(<Element>container.querySelector('#ringContainer'));
 		this.updateRingGroups();
+
+		document.addEventListener('keydown', (e) => {
+			switch (e.code) {
+				case 'ArrowUp':
+					this.ringsScale += this.scaleInteger;
+					this.updateRingTransforms();
+					break;
+				case 'ArrowDown':
+					this.ringsScale -= this.scaleInteger
+					this.updateRingTransforms();
+					break;
+				case 'Space':
+					this.randomizeRings();
+				default:
+					break;
+			}
+		});	
 
 		this.mainLoop();
 		this.initializeScanning();
@@ -27,24 +48,33 @@ class ringDisplay extends ringSection {
 		setTimeout(() => { requestAnimationFrame(this.mainLoop); }, 1000);
 
 		this.counter++
-		let rotation = (this.counter % (this.ringGroupRatios['outer'] * 12)) * this.rotationRatio;
+		this.updateRingTransforms();
+	}
 
-		for (let group in this.ringGroups) {
-			if (this.counter % this.ringGroupRatios[group] == 0) {
-				let groupRotation = (rotation / this.ringGroupRatios[group])
-
-				this.ringGroups[group].forEach(ring => {
-					ring.setAttribute('style', `transform: rotate(${groupRotation}deg) translate(-50%, -50%)`)
-				})
-			}
-		}
+	randomizeRings(): void {	
+		this.ringNames.forEach(ringType => {
+			let rand = Math.floor(Math.random() * this.numArtists);
+			this.addRing(this.rings.get(ringType)![rand])
+		})
 	}
 
 	updateRingGroups(): void {
 		this.ringGroups = {
-			'centre': [this.activeRings.get(this.ringNames[0])!],
-			'inner': [this.activeRings.get(this.ringNames[1])!, this.activeRings.get(this.ringNames[2])!],
-			'outer': [this.activeRings.get(this.ringNames[3])!, this.activeRings.get(this.ringNames[4])!]
+			'centre': [...this.rings.get(this.ringNames[0])!],
+			'inner': [...this.rings.get(this.ringNames[1])!, ...this.rings.get(this.ringNames[2])!],
+			'outer': [...this.rings.get(this.ringNames[3])!, ...this.rings.get(this.ringNames[4])!]
+		}
+	}
+
+	updateRingTransforms(): void {
+		for (let group in this.ringGroups) {
+			let rotation = ((this.counter % (this.ringGroupRatios[group] * 12)) * this.rotationRatio) / this.ringGroupRatios[group];
+			let rotateTurn = this.counter % this.ringGroupRatios[group] === 0
+
+			this.ringGroups[group].forEach(ring => {
+				if (rotateTurn) this.ringGroupRotations[group] = rotation;
+				ring.getElement().setAttribute('style', `transform: rotate(${this.ringGroupRotations[group]}deg) scale(${this.ringsScale})`)
+			})
 		}
 	}
 
@@ -61,7 +91,7 @@ class ringDisplay extends ringSection {
 					cameraId,
 					{
 						fps: 2,
-						qrbox: 400,
+						qrbox: 550,
 						
 					},
 					qrCodeMessage => {
@@ -87,14 +117,12 @@ class ringDisplay extends ringSection {
 				if (index == 0 && code == this.ringsQRPass) return;
 				else {
 					let ringType: string = this.ringNames[index - 1]
-					let ringGroup: HTMLElement[] = this.rings.get(ringType)!
+					let ringGroup: ringClass[] = this.rings.get(ringType)!
 					let loadRing = ringGroup[Number(code)]
 
 					this.addRing(loadRing)
 				}
 			});
 		}
-
-		this.updateRingGroups()
 	}
 }

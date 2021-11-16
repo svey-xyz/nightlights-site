@@ -12,5 +12,13 @@ export default {
 			type: 'navPage',
 			// description: 'Select and order included artists.',
 		}
-	]
+	],
+	preview: {
+		prepare(value) {
+			return {
+				title: `Link Button`,
+				subtitle: 'Links to an internal page using a custom button.'
+			}
+		}
+	}
 }

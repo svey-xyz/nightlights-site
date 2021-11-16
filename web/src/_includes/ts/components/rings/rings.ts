@@ -1,13 +1,13 @@
 import { updateURLParameter } from '../../utilities/updateURLParameter'
-
+import { ringClass } from "./ringClass";
 
 export class ringSection {
 
 	ringContainer: HTMLElement;
 	
 	ringNames: Array<string> = ['centerRing', 'innerRingOne', 'innerRingTwo', 'outerRingOne', 'outerRingTwo'];
-	rings: Map<string, HTMLElement[]> = new Map<string, HTMLElement[]>();
-	activeRings: Map<string, HTMLElement> = new Map<string, HTMLElement>();
+	rings: Map<string, ringClass[]> = new Map<string, ringClass[]>();
+	activeRings: Map<string, ringClass> = new Map<string, ringClass>();
 
 	numArtists: number;
 	ringsParamString: string = 'rings'
@@ -26,7 +26,7 @@ export class ringSection {
 		
 		this.ringNames.forEach(ringName => {
 			let nodeListRings: NodeListOf<HTMLElement> = container.querySelectorAll(`[data-ringtype='${ringName}']`)
-			let currentRingSelection = Array.from(nodeListRings)
+			let currentRingSelection = this.ringsFromElements(Array.from(nodeListRings))
 
 			this.rings.set(ringName, currentRingSelection);
 
@@ -37,26 +37,26 @@ export class ringSection {
 
 			currentRingSelection.forEach((ring, index) => {
 				if (index == firstRing) this.addRing(ring);
-				ring.addEventListener('mousedown', this.inputHandler);
+				ring.getElement().addEventListener('mousedown', this.inputHandler);
 			})
 		});
 	}
 
 	handleInput(e: Event): void { };
 
-	addRing(newRing: HTMLElement) {
-		let newRingType = newRing.getAttribute('data-ringtype')!;
+	addRing(newRing: ringClass) {
+		let newRingType = newRing.getElement().getAttribute('data-ringtype')!;
 		this.activeRings.set(newRingType, newRing);
 
-		newRing.classList.add('block');
-		newRing.classList.remove('hidden');
+		newRing.getElement().classList.add('block');
+		newRing.getElement().classList.remove('hidden');
 
 		this.ringNames.forEach(ringName => {
 			if (ringName == newRingType) {
 				this.rings.get(ringName)!.forEach(ring => {
 					if (ring != newRing) {
-						ring.classList.remove('block')
-						ring.classList.add('hidden')
+						ring.getElement().classList.remove('block')
+						ring.getElement().classList.add('hidden')
 					}
 				})
 			}
@@ -69,10 +69,19 @@ export class ringSection {
 		let code:string = '';
 
 		this.activeRings.forEach((ring) => {
-			code += `${this.rings.get(ring.getAttribute('data-ringtype')!)!.indexOf(ring)}${this.codeSeparator}`
+			code += `${this.rings.get(ring.getElement().getAttribute('data-ringtype')!)!.indexOf(ring)}${this.codeSeparator}`
 		});
 
 		return code.slice(0, -1);
+	}
+
+	ringsFromElements(ringSelection: HTMLElement[]): ringClass[] {
+		let rings: ringClass[] = []
+		ringSelection.forEach(ringElement => {
+			rings.push(new ringClass(ringElement))
+		});
+
+		return rings;
 	}
 }
 

@@ -1,10 +1,11 @@
 
-<div id="displayRings" class="inset-0">
-	<div class="absolute inset-0 flex flex-col items-center justify-end pb-12 pointer-events-none">
+<div id="displayRings" class="inset-0 absolute">
+	<div class="absolute inset-0 flex flex-col items-center justify-end">
+		{% set ringDisplay = true%}
 		{% include ("layouts/utilities/ringContainer.njk") %}
 	</div>
 </div>
 
-<div class="absolute inset-0 opacity-0 overflow-hidden">
+<div class="absolute inset-0 opacity-50 overflow-hidden pointer-events-none">
 	<div id="reader" width="600px"></div>
 </div>

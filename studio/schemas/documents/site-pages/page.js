@@ -73,7 +73,7 @@ export default {
 			options: {
 				icon: AiOutlineFileSearch,
 				headline: 'Optimization Tip',
-				message: 'The following fields are incredibly important for your SEO. <br><a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title#page_titles_and_seo">Read more about good titles.</a>',
+				message: `The following fields are incredibly important for your SEO.`,
 				tone: 'transparent'
 			}
 		},

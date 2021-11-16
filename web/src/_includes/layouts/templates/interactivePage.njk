@@ -5,7 +5,7 @@
 		duration-150 hover:scale-105" alt="Back Arrow"></i></a>
 </div>
 
-<div id="interactiveRings" class="inset-0">
+<div id="interactiveRings" class="inset-0 absolute ">
 
 	<div id="qrOverlay" class='absolute z-30 left-0 top-0 w-screen h-screen flex items-center justify-center hidden
 		after:absolute after:inset-0 after:bg-primary-bg after:opacity-90'>
@@ -19,6 +19,7 @@
 	</div>
 
 	<div class="absolute inset-0 flex flex-col items-center justify-end pb-12 pointer-events-auto">
+		{% set ringDisplay = false %}
 		{% include ("layouts/utilities/ringContainer.njk") %}
 		<p id="qrButton" class='relative std-round-button cursor-pointer inline-block z-20'>Generate Code</p>
 	</div>
