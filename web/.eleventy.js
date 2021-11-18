@@ -38,7 +38,7 @@ module.exports = (eleventyConfig) => {
 
 	eleventyConfig.addShortcode("bundlePointer", bundlePointer);
 
-	// eleventyConfig.addPassthroughCopy({ "./src/_includes/assets/robots.txt": "robots.txt" }); // Enable to disallow lookup
+	eleventyConfig.addPassthroughCopy({ "./src/_includes/assets/robots.txt": "robots.txt" });
 
 	eleventyConfig.addWatchTarget("./src/style/**/*"); // doesn't work with eleventy config not at root
 

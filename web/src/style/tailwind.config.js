@@ -61,8 +61,8 @@ module.exports = {
 				xl: '0 0px 15px -5px rgba(0,0,0,0.8), 0 0px 8px -1px rgba(0,0,0,.06)',
 			},
 			fontFamily: {
-				heading: ['DM Serif Display', 'serif'],
-				body: ['Montserrat', 'sans-serif']
+				heading: ['Catamaran', 'sans-serif'],
+				body: ['Catamaran', 'sans-serif']
 			},
 			lineHeight: {
 				'xs': '0.8'
