@@ -7,17 +7,24 @@ export default {
 	icon: MdOutlineSmartButton,
 	fields: [
 		{
+			title: 'Button Text',
+			name: 'buttonText',
+			type: 'string',
+		},
+		{
 			title: 'Link',
 			name: 'link',
-			type: 'navPage',
-			// description: 'Select and order included artists.',
+			type: 'link',
 		}
 	],
 	preview: {
-		prepare(value) {
+		select: {
+			title: 'buttonText'
+		},
+		prepare(value) {	
 			return {
-				title: `Link Button`,
-				subtitle: 'Links to an internal page using a custom button.'
+				title: `${value.title}`,
+				subtitle: 'Links to a page using a custom button.'
 			}
 		}
 	}

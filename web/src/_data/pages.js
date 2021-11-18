@@ -7,8 +7,12 @@ module.exports = async () => {
 				_type,
 				...,
 				_type == "linkButton" => {
-                	"title":link.title,
-					"link":link.page->slug.current
+                	"buttonText":buttonText,
+					"url":select(
+					    link.condition == "internalPage" => '/' + link.internalPage->slug.current,
+                    	link.condition == "externalLink" => link.externalLink
+        			),
+					"linkType":link.condition
 				},
 				_type == "artistCards" => {
                 	"artists":artists[]->{

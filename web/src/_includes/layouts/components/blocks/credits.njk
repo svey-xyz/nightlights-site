@@ -1,0 +1,18 @@
+{#
+	Basic Credit's Section Block.
+#}
+
+<div class="main-padding block-padding w-full">
+	<div class="w-full flex flex-col md:flex-row justify-between">
+		{% asyncEach credit in section.credits %}
+			<a href="{{ credit.creditLink }}" rel="noreferrer" target="_blank"
+					class="group relative overflow-hidden rounded-3xl shadow-md bg-primary-bg min-w-2/3 w-2/3 my-4 mx-auto md:mx-0 sm:w-1/2 md:w-1/4
+					transform duration-150 hover:scale-102">
+				<div class="m-4">
+					<h3 class="break-words">{{ credit.creditName }}</h3>
+					<span class="">{{ credit.creditBlurb }}</span>
+				</div>
+			</a>
+		{% endeach %}
+	</div>
+</div>

@@ -21,7 +21,7 @@ export default {
 			options: {
 				list: [
 					{ title: 'Plain', value: 'plain' },
-					{ title: 'Highlighted', value: 'highlighted' },
+					{ title: 'Collapsible', value: 'collapsible' },
 					{ title: 'Block', value: 'block' },
 				],
 				// layout: 'radio',

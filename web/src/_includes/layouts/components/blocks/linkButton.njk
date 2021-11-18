@@ -1,9 +1,17 @@
 {#
 	Basic Button Section.
+
+	externalLink / internalPage
 #}
 
+{% set linkSafety %}
+	{% if (section.linkType == "externalLink") %}
+		rel=noreferrer target=_blank
+	{% endif %}
+{% endset %}
+
 <div class="main-padding block-padding">
-	<a class="std-round-button" href="/{{ section.link }}">
-		{{ section.title }}
+	<a class="std-round-button" href="{{ section.url }}" {{ linkSafety }}>
+		{{ section.buttonText }}
 	</a>
 </div>

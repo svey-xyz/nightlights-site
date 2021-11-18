@@ -8,9 +8,9 @@
 		@apply text-4xl font-black;
 	}
 	h2 {
-		@apply text-3xl md:text-4xl font-black relative inline-block self-center
-			after:absolute after:block after:h-[6px] after:left-[-5%] after:w-[120%] after:top-full after:mt-2
-			after:rounded-full after:bg-gradient-to-r after:from-primary-border tracking-widest;
+		@apply text-3xl md:text-4xl font-black relative inline-block self-center tracking-widest;
+			/* after:absolute after:block after:h-[6px] after:left-[-5%] after:w-[120%] after:top-full after:mt-2
+			after:rounded-full after:bg-gradient-to-r after:from-primary-border tracking-widest; */
 		font-variant: small-caps;
 	}
 	h3 {
