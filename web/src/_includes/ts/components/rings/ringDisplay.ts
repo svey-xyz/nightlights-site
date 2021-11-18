@@ -88,8 +88,8 @@ class ringDisplay extends ringSection {
 				html5QrCode.start(
 					cameraId,
 					{
-						fps: 2,
-						qrbox: 500,
+						fps: 8,
+						qrbox: 1080,
 						
 					},
 					qrCodeMessage => {

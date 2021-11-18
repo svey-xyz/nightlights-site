@@ -50,6 +50,7 @@ module.exports = async (src, imgClasses, alt, sizes, widths, dataAttr = '', picC
 		class="${imgClasses}"
 		alt="${alt}"
 		src="${lowestSrc.url}"
+		loading="lazy"
 		sizes='${sizes}'
 		data-src="${srcset["webp"]}"
 		width="${lowestSrc.width}"
